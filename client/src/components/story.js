@@ -1,7 +1,7 @@
 var React = require('react')
 var Line = require('./line')
-var Help = require('../helpers')
 var io = require('socket.io-client')
+var API = require('../lib/api')
 
 const socket = io()
 
@@ -25,33 +25,33 @@ module.exports = class Story extends React.Component {
 
   //once the component renders
   componentDidMount () {
-    //retrieve story data from server
-    $.get(`/stories/${this.state.storyId}`)
-    .then(story => {
-      console.log('Got story: ', story)
-      //set state with this data
-      this.setState({
-        title: story.title,
-        users: story.users,
-        complete: story.complete,
-        length: story.length,
-        numberUsers: story.numberUsers,
-        currentLine: story.currentLine,
-        lines: story.lines
+    // retrieve story data from server
+    API.getStory(this.props.params.id)
+      .then(story => {
+        console.log('Got story: ', story)
+        //set state with this data
+        this.setState({
+          title: story.title,
+          users: story.users,
+          complete: story.complete,
+          length: story.length,
+          numberUsers: story.numberUsers,
+          currentLine: story.currentLine,
+          lines: story.lines
+        })
+
+        //Find the current user's ID within the users array and retrieve the index
+        const currentUserIndex = this.state.users.indexOf(this.state.currentUser.id)
+
+        //If the current user's index is 0, set the prevLineIndex to 0 as well. This will
+        //prevent the app from trying to render a line with an index of -1.
+        const prevLineIndex = (currentUserIndex ? currentUserIndex - 1 : currentUserIndex)
+
+        this.setState({
+          currentUserIndex: currentUserIndex,
+          prevLineIndex: prevLineIndex
+        })
       })
-
-      //Find the current user's ID within the users array and retrieve the index
-      const currentUserIndex = this.state.users.indexOf(this.state.currentUser.id)
-
-      //If the current user's index is 0, set the prevLineIndex to 0 as well. This will
-      //prevent the app from trying to render a line with an index of -1.
-      const prevLineIndex = (currentUserIndex ? currentUserIndex - 1 : currentUserIndex)
-
-      this.setState({
-        currentUserIndex: currentUserIndex,
-        prevLineIndex: prevLineIndex
-      })
-    })
 
     //Do you know the salty slug?
     socket.emit('salty slug')

@@ -15,3 +15,8 @@ API.getStories = function() {
   return http.get('/api/stories')
     .then(res => res.data)
 }
+
+API.getStory = function(storyId) {
+  return http.get(`/api/stories/${storyId}`)
+    .then(res => res.data)
+}
