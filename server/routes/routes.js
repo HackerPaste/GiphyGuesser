@@ -36,7 +36,7 @@ router.route('/logout').get((req,res) => {
 router.route('/auth/facebook').get(passport.authenticate('facebook'))
 
 router.get('/', (req,res) => {
-  res.sendFile(path.resolve(__dirname, '../../client/public/index.html'))
+  res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
 })
 
 // facebook will call this URL
@@ -45,6 +45,6 @@ router.route('/auth/facebook/return').get(passport.authenticate('facebook', {
   successRedirect: '/#/',
 }))
 router.route('/').get((req,res) => {
-  res.sendFile(path.resolve(__dirname, '../../client/public/index.html'))
+  res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
 })
 module.exports = router
