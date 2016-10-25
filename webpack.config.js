@@ -24,7 +24,7 @@ module.exports = {
         }
       },
 
-      { 
+      {
         test: /\.json$/,
         loader: 'json-loader'
       },
@@ -33,8 +33,8 @@ module.exports = {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       },
-      
-      { 
+
+      {
         test: /\.png$/,
         loader: "file-loader"
       }
