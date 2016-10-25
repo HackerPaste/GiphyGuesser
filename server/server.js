@@ -68,6 +68,7 @@ passport.use(new FacebookStrategy({
 
 // app level middleware
 app.use(morgan('dev'))
+
 app.get('/bundle.js', browserify('./client/index.js', {
   debug: true,
   transform: [
@@ -75,13 +76,14 @@ app.get('/bundle.js', browserify('./client/index.js', {
   ]
 }));
 
-router.get('/style.css', LESS.serve('./client/less/index.less', {
+app.get('/style.css', LESS.serve('./client/less/index.less', {
   debug: true,
   watchDir: './client/less'
 }));
 
+app.use(express.static(path.resolve(__dirname, '..client/public')))
+
 app.use(bodyParser.json());
-app.use(express.static(path.resolve(__dirname, '../dist')))
 app.use(session({
   secret: charles.secret,
   resave: true,
@@ -104,7 +106,7 @@ app.get('/auth/facebook/return', passport.authenticate('facebook', {
 
 app.use('/api', router)
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'))
+  res.sendFile(path.join(__dirname, '../client/public/index.html'))
 })
 
 server.listen(port)
