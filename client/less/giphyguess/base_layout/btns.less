@@ -1,11 +1,3 @@
-body {
-  font-family: helvetica;
-  font-weight: 800;
-  background-color: white;
-  color: black;
-  text-align: center;
-}
-
 .standardButton {
   font-size: 1.2em;
   font-weight: 800;
@@ -20,24 +12,38 @@ body {
   color: white;
   background-color: black;
   border: 3px solid white;
-}
 
-.blackButton:hover {
-  color: black;
-  background-color: white;
-  border: 3px solid black;
+  &:hover {
+    color: black;
+    background-color: white;
+    border: 3px solid black;
+  }
 }
-
 .whiteButton {
   color: black;
   background-color: white;
   border: 3px solid black;
+
+  &:hover {
+    color: white;
+    background-color: black;
+    border: 3px solid white;
+  }
 }
 
-.whiteButton:hover {
-  color: white;
-  background-color: black;
-  border: 3px solid white;
+.toggleButtonWrap {
+  width: 300px;
+  margin: 30px auto 30px auto;
+}
+
+.createButtonWrap {
+  width: 30%;
+  margin: 10px auto;
+}
+
+.signupButtonWrap {
+  margin: 10px auto 10px auto;
+  width: 30%;
 }
 
 .facebookButton {
@@ -51,10 +57,10 @@ body {
   padding: 10px 20px;
   width: 100%;
   transition: ease-in-out 150ms;
-}
 
-.facebookButton:hover {
-  color: #3b5998;
-  background-color: white;
-  border: 3px solid #3b5998;
+  &:hover {
+    color: #3b5998;
+    background-color: white;
+    border: 3px solid #3b5998;
+  }
 }
