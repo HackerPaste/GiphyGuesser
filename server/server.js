@@ -38,7 +38,7 @@ passport.use(new FacebookStrategy({
 
   }, function(req, token, refreshToken, profile, done) {
     console.log('refreshToken:',refreshToken)
-    let query = {
+    var query = {
       'facebookId': profile.id
     };
 
@@ -48,7 +48,7 @@ passport.use(new FacebookStrategy({
         done(null, user)
       } else {
         console.log('User not found - adding to DB')
-        let newUser = {}
+        var newUser = {}
         newUser.facebookId = profile.id
         newUser.name = profile.displayName
         newUser.profilePic = `http://graph.facebook.com/${profile.id}/picture?width=400&height=400`
@@ -108,6 +108,8 @@ app.use('/api', router)
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/public/index.html'))
 })
+
+
 
 server.listen(port)
 
