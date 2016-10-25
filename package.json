@@ -22,6 +22,7 @@
     "express-session": "^1.14.1",
     "mongoose": "^4.6.3",
     "morgan": "^1.7.0",
+    "node-less-endpoint": "^0.2.0",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
