@@ -1,6 +1,6 @@
 const stories = require('../controllers/storyController')
 const users = require('../controllers/userController')
-const gif = require('../controllers/giphyController')
+const game = require('../controllers/gameController')
 const router = require('express').Router()
 const path = require('path')
 const passport = require('passport')
@@ -20,6 +20,6 @@ router.route('/stories/:id').get(isAuthed, stories.joinStory, stories.getOneStor
 router.route('/stories').post(isAuthed,stories.createStory)
 router.route('/stories/:id').put(stories.createNewLine)
 
-router.route('/giphyGet').post(isAuthed, gif.gifGet)
+router.route('/giphyGet').post(isAuthed, game.gifGet)
 
 module.exports = router
