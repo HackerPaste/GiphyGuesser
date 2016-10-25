@@ -24,7 +24,7 @@ This app allows people to write a story together one line at a time -- with a tw
 npm install
 ```
 
-Start up the Express server on port 8081 with `npm start`. 
+Start up the Express server on port 8081 with `npm start`.
 
 ##Facebook Auth
 You will need to create an app at developers.facebook.com for Facebook authentication to work. Add all of your team members as developers to this app. Facebook will generate an App ID and App Secret for you.
@@ -58,9 +58,3 @@ From there you can open a new terminal tab and run:
 mongo
 ```
 The you can type `show dbs` to see all your databases. Then type `use line4line`.
-
-##Webpack
-```
-npm run webpack
-```
-Running  `npm run webpack` will create a bundle in the `dist` folder. This folder is what gets served to the web browser. Unfortunately, you will have to run this command every time you update a React component then restart your Express server with `npm start`. Webpack does come with a dev-server that you can run with `npm run dev`. The webpack dev server quickly rebundles for you every time you save an edit. However, this dev server runs on port 8080 and will give you CORS errors when you try to login with Facebook. There is a way to get the Express server and webpack dev server to play together but we did not figure it out.
