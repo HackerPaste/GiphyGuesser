@@ -1,7 +1,7 @@
-import React from 'react'
-import Login from './login'
+var React = require('react')
+var Login = require('./login')
 
-const NavBar = (props) => {
+module.exports = (props) => {
   return (
     <div className="navbarWrap">
       <div className="headerLogo">
@@ -16,5 +16,3 @@ const NavBar = (props) => {
     </div>
   )
 }
-
-export default NavBar

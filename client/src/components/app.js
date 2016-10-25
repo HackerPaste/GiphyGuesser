@@ -1,13 +1,12 @@
-import React from 'react'
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
-import Lobby from './lobby'
-import Story from './story'
-import Login from './login'
-import CreateStory from './CreateStory'
-import NavBar from './NavBar'
+var React = require('react')
+var { Router, Route, Link, IndexRoute, hashHistory, browserHistory } = require('react-router')
+var Lobby = require('./lobby')
+var Story = require('./story')
+var Login = require('./login')
+var CreateStory = require('./CreateStory')
+var NavBar = require('./NavBar')
 
-
-class App extends React.Component {
+module.exports = class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -46,19 +45,17 @@ class App extends React.Component {
           currentUser={this.state.currentUser}
         />
         {
-        //if there is a current user, render the lobby/story with react router
-        //else tell the user to login
-        this.state.currentUser ? 
-        <Router history={hashHistory}>
-          <Route path='/' component={Lobby} />
-          <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
-        </Router> 
-        : 
-        <div>Please Login</div>
+          //if there is a current user, render the lobby/story with react router
+          //else tell the user to login
+          this.state.currentUser ?
+            <Router history={hashHistory}>
+              <Route path='/' component={Lobby} />
+              <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
+            </Router>
+          :
+          <div>Please Login</div>
         }
       </div>
     )
   }
 }
-
-export default App

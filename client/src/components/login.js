@@ -1,8 +1,8 @@
-import React from 'react'
-import LoginButton from './LoginButton'
-import LogoutButton from './LogoutButton'
+var React = require('react')
+var LoginButton = require('./LoginButton')
+var LogoutButton = require('./LogoutButton')
 
-const Login = (props) => {
+module.exports = (props) => {
   let loginButton
     if (!props.currentUser) {
       loginButton = <LoginButton loginWithFacebook={props.loginWithFacebook} />
@@ -15,5 +15,3 @@ const Login = (props) => {
     </div>
   )
 }
-
-export default Login

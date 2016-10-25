@@ -1,7 +1,7 @@
-import React from 'react'
-import CreateStory from './CreateStory'
+var React = require('react');
+var CreateStory = require('./CreateStory');
 
-class Accordion extends React.Component {
+module.exports = class Accordion extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -33,6 +33,3 @@ class Accordion extends React.Component {
     )
   }
 }
-
-
-export default Accordion

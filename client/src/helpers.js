@@ -1,4 +1,4 @@
-var helpers = {
+module.exports = {
   getLineData: function(cb){
     return $.get(`http://127.0.0.1:8081/stories/${id}`)
   },
@@ -40,7 +40,3 @@ var helpers = {
       ]
     }
 }
-
-
-
-module.exports = helpers

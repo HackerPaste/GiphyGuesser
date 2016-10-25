@@ -1,6 +1,6 @@
-import React from 'react'
+var React = require('react')
 
-const NavContainer = (props) => {
+module.exports = (props) => {
   return (
     <div>
       <Nav />
