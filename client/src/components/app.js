@@ -5,6 +5,7 @@ var Story = require('./story')
 var Login = require('./login')
 var CreateStory = require('./CreateStory')
 var NavBar = require('./NavBar')
+var API = require('../lib/api')
 
 module.exports = class App extends React.Component {
   constructor (props) {
@@ -19,7 +20,7 @@ module.exports = class App extends React.Component {
   componentDidMount () {
     //Make and initial get request to sign the user in with Facebook
     //This current user will be used in many places throughout the app.
-    $.get('/user')
+    API.getUser()
     .then(user => {
       this.setState({
         currentUser: user
