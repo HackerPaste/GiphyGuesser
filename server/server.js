@@ -9,6 +9,7 @@ const session = require('express-session')
 const path = require('path')
 const morgan = require('morgan')
 const browserify = require('browserify-middleware')
+const LESS = require('node-less-endpoint')
 
 const router = require('./routes/routes')
 const User = require('./models/user')
@@ -72,6 +73,11 @@ app.get('/bundle.js', browserify('./client/index.js', {
   transform: [
     ['babelify', { presets: ['es2015', 'react'] }]
   ]
+}));
+
+router.get('/style.css', LESS.serve('./client/less/index.less', {
+  debug: true,
+  watchDir: './client/less'
 }));
 
 app.use(bodyParser.json());

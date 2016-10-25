@@ -3,12 +3,6 @@ const users = require('../controllers/userController')
 const router = require('express').Router()
 const path = require('path')
 const passport = require('passport')
-var LESS = require('node-less-endpoint');
-
-router.get('/style.css', LESS.serve('./client/less/index.less', {
-  debug: true,
-  watchDir: './client/less'
-}));
 
 isAuthed = (req,res,next) => {
   if(req.isAuthenticated()){
