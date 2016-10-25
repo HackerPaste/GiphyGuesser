@@ -1,8 +1,7 @@
 var React = require('react')
 var OpenStory = require('./OpenStory')
 var Accordion = require('./Accordion')
-
-
+var API = require('../lib/api')
 module.exports = class Lobby extends React.Component {
   constructor (props) {
     super(props)
@@ -17,19 +16,19 @@ module.exports = class Lobby extends React.Component {
 
   componentDidMount () {
     //get an array of all the stories from the db that need more users
-    $.get('/stories')
-    .then(stories => {
-      console.log('Got stories: ', stories);
-      let completeStories = stories.filter(story => story.complete)
-      console.log('comstor: ',completeStories)
-      let openStories = stories.filter(story => story.length > story.lines.length)
-      console.log('openstor: ', openStories)
-      this.setState({
-        allStories: stories,
-        openStories: openStories,
-        completeStories: completeStories
+    API.getStories()
+      .then(stories => {
+        console.log('Got stories: ', stories);
+        let completeStories = stories.filter(story => story.complete)
+        console.log('comstor: ',completeStories)
+        let openStories = stories.filter(story => story.length > story.lines.length)
+        console.log('openstor: ', openStories)
+        this.setState({
+          allStories: stories,
+          openStories: openStories,
+          completeStories: completeStories
+        })
       })
-    })
   }
 
   toggleDisplay () {

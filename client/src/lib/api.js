@@ -10,3 +10,8 @@ API.createStory = function (story) {
   return http.post('/api/stories', story)
     .then(res => res.data)
 }
+
+API.getStories = function() {
+  return http.get('/api/stories')
+    .then(res => res.data)
+}
