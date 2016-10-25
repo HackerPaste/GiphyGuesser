@@ -1,13 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router'
+var React = require('react')
+var { Link } = require('react-router')
 
 
-const LoginButton = (props) => {
+module.exports = (props) => {
   return (
     <a href="/auth/facebook" className="standardButton facebookButton">
       Login with Facebook
     </a>
   )
 }
-
-export default LoginButton

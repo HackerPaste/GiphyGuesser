@@ -1,6 +1,6 @@
-import React from 'react'
+var React = require('react')
 
-const CreateStory = (props) => {
+module.exports = (props) => {
 
   const createStory = (e) => {
     e.preventDefault()
@@ -9,8 +9,8 @@ const CreateStory = (props) => {
     newStory.numberUsers = document.getElementById('createNUsers').value
     $.ajax({
       type: 'POST',
-      url:'/stories', 
-      data: newStory, 
+      url:'/stories',
+      data: newStory,
       dataType: 'json',
       success: function(res){
         console.log('~~~',res)
@@ -23,7 +23,7 @@ const CreateStory = (props) => {
     <div className="createStoryWrap">
       <h3>A super creative title</h3>
       <form onSubmit={createStory}>
-        <div>  
+        <div>
           <input className="createStoryInput createTitleInput" id="createTitle" type="text" placeholder="The Tale of the..." />
         </div>
         <div>
@@ -37,5 +37,3 @@ const CreateStory = (props) => {
     </div>
   )
 }
-
-export default CreateStory

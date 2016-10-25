@@ -1,11 +1,11 @@
-import React from 'react'
-import Line from './line'
-import Help from '../helpers'
-import io from 'socket.io-client'
+var React = require('react')
+var Line = require('./line')
+var Help = require('../helpers')
+var io = require('socket.io-client')
 
 const socket = io()
 
-class Story extends React.Component {
+module.exports = class Story extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -127,5 +127,3 @@ class Story extends React.Component {
     }
   }
 }
-
-export default Story

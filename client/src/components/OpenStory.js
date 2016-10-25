@@ -1,8 +1,8 @@
-import React from 'react'
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
+var React = require('react')
+var { Router, Route, Link, IndexRoute, hashHistory, browserHistory } = require('react-router')
 
 
-const OpenStory = (props) => {
+module.exports = (props) => {
 
   const storyURL = `/stories/${props.story._id}`
 
@@ -26,5 +26,3 @@ const OpenStory = (props) => {
     </div>
   )
 }
-
-export default OpenStory

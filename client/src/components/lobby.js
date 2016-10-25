@@ -1,15 +1,15 @@
-import React from 'react'
-import OpenStory from './OpenStory'
-import Accordion from './Accordion'
+var React = require('react')
+var OpenStory = require('./OpenStory')
+var Accordion = require('./Accordion')
 
 
-class Lobby extends React.Component {
+module.exports = class Lobby extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       allStories: [],
       openStories: [],
-      completeStories: [], 
+      completeStories: [],
       displayComplete: false
     }
   this.toggleDisplay = this.toggleDisplay.bind(this)
@@ -29,7 +29,7 @@ class Lobby extends React.Component {
         openStories: openStories,
         completeStories: completeStories
       })
-    })   
+    })
   }
 
   toggleDisplay () {
@@ -58,9 +58,9 @@ class Lobby extends React.Component {
             :
 
             this.state.openStories.map((story, i) =>
-              <OpenStory story={story} key={i} />
+            <OpenStory story={story} key={i} />
             )
-            
+
           }
 
         </div>
@@ -68,5 +68,3 @@ class Lobby extends React.Component {
     )
   }
 }
-
-export default Lobby

@@ -1,8 +1,8 @@
-import React from 'react'
-import io from 'socket.io-client'
-const socket = io()
+var React = require('react')
+var io = require('socket.io-client')
+const socket = io();
 
-class Line extends React.Component {
+module.exports = class Line extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -57,23 +57,21 @@ class Line extends React.Component {
   render(){
     return (
       <div className="lineContainer">
-      {
-        !this.state.lock ?
+        {
+          !this.state.lock ?
           //if user hasn't submitted text, render form
-          <form ref="form" onSubmit={this.handleSubmit.bind(this)} className="lineForm">
-          <img className="userLine" src={this.props.userphoto} />
-            <input name="input" value={this.state.text} onChange={(e) => this.handleChange(e)} className="lineInput" type="text" placeholder="..." />
-          </form> :
+            <form ref="form" onSubmit={this.handleSubmit.bind(this)} className="lineForm">
+              <img className="userLine" src={this.props.userphoto} />
+              <input name="input" value={this.state.text} onChange={(e) => this.handleChange(e)} className="lineInput" type="text" placeholder="..." />
+            </form> :
           //if user has already submitted text, render text as div
           <div className="lineForm">
             <div className="userLine">user</div>
             <div className="lineInput">{this.state.text}</div>
           </div>
 
-      }
+        }
       </div>
     )
   }
 }
-
-export default Line

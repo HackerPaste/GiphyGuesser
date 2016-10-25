@@ -1,11 +1,9 @@
-import React from 'react'
+var React = require('react')
 
-const LogoutButton = (props) => {
+module.exports = (props) => {
   return (
     <a onClick={props.logout} href="/logout" className="standardButton blackButton">
       Logout
     </a>
   )
 }
-
-export default LogoutButton
