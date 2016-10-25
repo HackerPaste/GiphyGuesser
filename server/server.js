@@ -19,7 +19,7 @@ const charles = require('./secretsecrets')
 const port = process.env.PORT || 4000
 const app = express()
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const io = require('./socket.js').listen(server);
 
 passport.serializeUser(function (user, done) {
   console.log(user)
