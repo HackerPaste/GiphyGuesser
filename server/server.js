@@ -111,8 +111,8 @@ app.get('/*', (req, res) => {
 
 //Chat service
 io.on('message', function (message) { //'message' is the client side event created in react
-    io.get('pseudo', function (error, name) { //'pseudo' is the alias of the user
-        var data = { 'message' : message, pseudo : name };
+    io.get('alias', function (error, name) { //'pseudo' is the alias of the user
+        var data = { 'message' : message, alias : name };
         io.broadcast.emit('message', data);
         console.log("user " + name + " send this : " + message);
     })
