@@ -1,22 +1,16 @@
 var React = require('react')
-
+var API = require('../lib/api')
 module.exports = (props) => {
 
   const createStory = (e) => {
+    // REFACTOR IF WE HAVE TIME.
     e.preventDefault()
     const newStory = {}
     newStory.title = document.getElementById('createTitle').value
     newStory.numberUsers = document.getElementById('createNUsers').value
-    $.ajax({
-      type: 'POST',
-      url:'/stories',
-      data: newStory,
-      dataType: 'json',
-      success: function(res){
-        console.log('~~~',res)
-        window.location = res.redirect
-      }
-    })
+
+    API.createStory(newStory)
+      .then(res => window.location = res.redirect)
   }
 
   return (
