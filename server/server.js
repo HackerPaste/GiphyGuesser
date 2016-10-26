@@ -109,7 +109,14 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/public/index.html'))
 })
 
-
+//Chat service
+io.on('message', function (message) { //'message' is the client side event created in react
+    io.get('pseudo', function (error, name) { //'pseudo' is the alias of the user
+        var data = { 'message' : message, pseudo : name };
+        io.broadcast.emit('message', data);
+        console.log("user " + name + " send this : " + message);
+    })
+});
 
 server.listen(port)
 
