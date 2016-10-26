@@ -11,7 +11,7 @@ class Game extends React.Component {
 			<div>
 				<img src="https://media.giphy.com/media/26hirPEihrhzOXIUo/giphy.gif" alt="Mountain View"/>
 				<form>
-					<input className="createStoryInput createTitleInput guessinput" value="What's your guess?" type="text" name="guess"/>
+					<input className="gameTextInput createTitleInput guessinput" placeholder="Guess Away!" type="text" name="guess"/>
 					<input type="submit" value="Submit"/>
 				</form>
 			</div>
