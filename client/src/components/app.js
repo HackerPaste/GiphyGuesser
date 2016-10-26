@@ -18,7 +18,7 @@ module.exports = class App extends React.Component {
   }
 
   componentDidMount () {
-    //Make and initial get request to sign the user in with Facebook
+    //Make an initial get request to sign the user in with Facebook
     //This current user will be used in many places throughout the app.
     API.getUser()
     .then(user => {

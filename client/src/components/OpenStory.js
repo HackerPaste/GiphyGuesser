@@ -11,7 +11,7 @@ module.exports = (props) => {
   const joinStory = () => {
     window.location = `/#${storyURL}`
   }
-
+console.log("heres the window.location", window.location)
   return (
     <div className="openStoryWrap">
       <div className="openStoryTitle">{props.story.title}</div>

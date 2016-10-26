@@ -15,7 +15,7 @@ module.exports = (props) => {
 
   return (
     <div className="createStoryWrap">
-      <h3>A super creative title</h3>
+
       <form onSubmit={createStory}>
         <div>
           <input className="createStoryInput createTitleInput" id="createTitle" type="text" placeholder="The Tale of the..." />
