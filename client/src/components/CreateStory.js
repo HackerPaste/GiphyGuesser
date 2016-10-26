@@ -1,5 +1,6 @@
 var React = require('react')
 var API = require('../lib/api')
+
 module.exports = (props) => {
 
   const createStory = (e) => {
@@ -18,7 +19,7 @@ module.exports = (props) => {
 
       <form onSubmit={createStory}>
         <div>
-          <input className="createStoryInput createTitleInput" id="createTitle" type="text" placeholder="The Tale of the..." />
+          <input className="createStoryInput createTitleInput" id="createTitle" type="text" placeholder="Giffy Subject" />
         </div>
         <div>
           <h3>Number of users</h3>
@@ -28,6 +29,7 @@ module.exports = (props) => {
           <input className="standardButton blackButton" type="submit" value="Create" />
         </div>
       </form>
+
     </div>
   )
 }

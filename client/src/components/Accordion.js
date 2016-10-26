@@ -1,5 +1,8 @@
 var React = require('react');
 var CreateStory = require('./CreateStory');
+var StartButton = require ('./startButton.js')
+
+
 
 module.exports = class Accordion extends React.Component {
   constructor(props) {
@@ -18,13 +21,14 @@ module.exports = class Accordion extends React.Component {
 
   render () {
 
-    const buttonText = this.state.active ? 'Hide' : '+ Start a Game'
+    const buttonText = this.state.active ? 'Hide' : '+ Create a Game'
     const sliderClass = this.state.active ? "show" : "hide"
 
     return (
       <div>
         <div className="toggleButtonWrap">
           <button className="standardButton whiteButton" onClick={this.toggle}>{buttonText}</button>
+          <StartButton />
         </div>
         <div className={sliderClass}>
           <CreateStory />
