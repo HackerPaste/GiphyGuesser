@@ -3,10 +3,12 @@ var OpenStory = require('./OpenStory')
 var Accordion = require('./Accordion')
 var GameBoard = require ('./games.js')
 var API = require('../lib/api')
+
 module.exports = class Lobby extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      currentUser: this.props.route.user,
       allStories: [],
       openStories: [],
       completeStories: [],

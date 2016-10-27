@@ -14,7 +14,6 @@ module.exports = class Line extends React.Component {
 
     var lineThis = this;
     socket.on('lineSaved', function(line) {
-      console.log('imma little bitch: ', line)
       lineThis.setState({
         userId: line.userId,
         text: line.text,

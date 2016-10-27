@@ -42,11 +42,24 @@ module.exports = class Story extends React.Component {
 
   render () {
     <div class="container">
-        <chatDisplay props={this.props}>
-        <div id="chatControls">
-          <input id="messageInput" type="text" onChange={this.handleMessageInput}/>
-          <button id="submit" type="submit" onClick={this.handleSubmit}>Enter</button>
+      <div className="guessWrap">
+        <div className="guessFeed">
+          <chatDisplay props={this.props}>
+          <div id="chatControls">
+            <input id="messageInput" type="text" onChange={this.handleMessageInput}/>
+            <button id="submit" type="submit" onClick={this.handleSubmit}>Enter</button>
+          </div>
         </div>
+      </div>
     </div>
   }
+
+
+
+      {dumps}
+
+    <Guess />
+
+
+
 }
