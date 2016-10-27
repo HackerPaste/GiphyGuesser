@@ -20,7 +20,7 @@ ul {
 }
 
 .gameTextInput {
-    border: solid #62b346 2px;
+    border: solid #f08ef1 2px;
     font-family: 'Russo One', sans-serif;
     border-radius: 10px;
     height: 5%;
@@ -35,7 +35,7 @@ ul {
 .guessinput {
    display: block;
    color: #78ca5b;
-   margin-top: 50px;
+   margin-top: 20px;
 }
 
 input[type=submit] {
@@ -49,22 +49,48 @@ input[type=submit] {
     font-size: 1em;
     font-family: 'Russo One', sans-serif;
     margin-top: 5px;
+    margin-left: 30%;
+    border: 1px solid rgba(255, 255, 255, 0.68);
+
+     &:hover {
+    color: white;
+    background: #f08ef1;
+    border: 1px solid rgba(255, 255, 255, 0.68);
+  }
     }
 
 .feedImages {
-  border-radius: 10px;
+  border-radius: 5px;
+  margin: 1%;
+  border: solid #f08ef1 2px;
 }
 
 .feedText {
   color: #b3ec9e;
-  font-size: 1.5em;
-  margin-left: 20px;
+  font-size: 1.6em;
+  margin-left: 40px;
 }
 
 .feedTextTitle {
-  color: black;
-  font-size: 1em;
-  margin-left: 10px;
+  color: rgba(121, 69, 121, 0.71);
+  font-size: .75em;
+  margin-left: 5px;
+}
+.guessFeed{
+  margin: auto;
+  margin-top: 10px;
+  max-width: 500px;
+  width: 50%;
+  border-radius: 20px;
+  height: 200px;
+  background-image: linear-gradient(rgba(137, 220, 108, 0), rgba(97, 177, 69, 0.29));
+  overflow: scroll;
+}
+.guessEntry {
+  text-align: left;
+  margin: auto;
+  width: 90%;
+  border-bottom: solid rgba(240, 142, 241, 0.35);
 }
 
 .openStoryWrap {
