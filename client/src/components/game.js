@@ -15,11 +15,11 @@ module.exports = class Game extends React.Component {
 			currentUser: props.user, //Double-check, should be object for picture and name
 			socket: io.connect(`/game_${props.game_id}`),
 			game: '', //Set in componentDidMount getGame
-			gameLeader: {}, //Set in componentDidMount newRound
-			gif: '', //Set in componentDidMount roundStart
-			gameOver: {}, //Set in componentDidMount
-			playerJoined: {}, //Set in componentDidMount
-			playerLeft: {}, //Set in componentDidMount
+			gameLeader: {}, //Set in componentDidMount newRound //Send to gameConsole for display
+			gif: '', //Set in componentDidMount roundStart //Send to gameConsole for display
+			gameOver: {}, //Set in componentDidMount //Send to gameConsole for display
+			playerJoined: {}, //Set in componentDidMount //Send to chatService for display
+			playerLeft: {}, //Set in componentDidMount //Send to chatService for display
 		}
 	}
 
