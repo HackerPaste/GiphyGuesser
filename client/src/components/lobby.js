@@ -40,15 +40,38 @@ module.exports = class Lobby extends React.Component {
 
   render () {
     var dummydata = [
-      {title: "Smarty Pants", players: 5},
-      {title: "Arvin Pants", players:3}
+      {title: "Rolling Bones",
+       players: 5,
+       pic: "https://media.giphy.com/media/3orif3fITs4rQqSXN6/giphy.gif"
+      },
+      {title: "Cat Claws",
+       players: 5,
+       pic: "https://media.giphy.com/media/3o7TKMhrIzsI8eyxfa/giphy.gif"
+      },
+      {title: "Hair Lovers",
+       players: 2,
+       pic: "https://media.giphy.com/media/ayYTO2cun7TUs/giphy.gif"
+      },
+      {title: "Wreckers",
+       players: 3,
+       pic: "https://media.giphy.com/media/7gcZKX1Dlo3iE/giphy.gif"
+      },
+      {title: "Rolling Bones",
+       players: 5,
+       pic: "https://media.giphy.com/media/3orif3fITs4rQqSXN6/giphy.gif"
+      },
+      {title: "Cat Claws",
+       players: 5,
+       pic: "https://media.giphy.com/media/3o7TKMhrIzsI8eyxfa/giphy.gif"
+      },
+
       ];
     var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
       <div>
       <GameBoard gamesGoing={dummydata} />
         <Accordion />
-        
+
         <div className='lobby'>
           <div className="lobbyLabels">
                     </div>
