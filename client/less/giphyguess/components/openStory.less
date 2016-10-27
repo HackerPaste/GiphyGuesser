@@ -12,7 +12,7 @@
   color: white;
   font-size: 1.2em;
   line-height: 0.5em;
-  font-family: Lato;;
+  font-family: Lato;
 }
 
 ul {
@@ -32,10 +32,19 @@ ul {
     overflow: hidden;
     background-image: linear-gradient(#dce2e2, #eef3ed);
 }
+.subjectDisplay {
+  display: normal;
+}
 .guessinput {
    display: block;
    color: #78ca5b;
-   margin-top: 20px;
+   margin-top: 10px;
+}
+
+.subjectinput {
+   display: block;
+   color: #78ca5b;
+   margin-top: 0px;
 }
 
 input[type=submit] {
@@ -47,10 +56,12 @@ input[type=submit] {
     background: #82d465;
     color: #a263a2;
     font-size: 1em;
+    
     font-family: 'Russo One', sans-serif;
     margin-top: 5px;
-    margin-left: 30%;
+    margin-left: 60%;
     border: 1px solid rgba(255, 255, 255, 0.68);
+
 
      &:hover {
     color: white;
@@ -61,15 +72,16 @@ input[type=submit] {
 
 .feedImages {
   border-radius: 5px;
-  margin: 1%;
+  margin-bottom: -2px;
   border: solid #f08ef1 2px;
 }
 
 .feedText {
   color: #b3ec9e;
-  font-size: 1.6em;
+  font-size: 1.4em;
   margin-left: 40px;
 }
+
 
 .feedTextTitle {
   color: rgba(121, 69, 121, 0.71);
@@ -78,13 +90,14 @@ input[type=submit] {
 }
 .guessFeed{
   margin: auto;
-  margin-top: 10px;
+  margin-top: -10px;
   max-width: 500px;
-  width: 50%;
+  width: 100%;
   border-radius: 20px;
-  height: 200px;
+  height: 300px;
   background-image: linear-gradient(rgba(137, 220, 108, 0), rgba(97, 177, 69, 0.29));
   overflow: scroll;
+  display: inline-block;
 }
 .guessEntry {
   text-align: left;
@@ -102,7 +115,22 @@ input[type=submit] {
   padding: 10px;
   box-shadow: 3px 3px 0px #d7d7d7;
 }
+.screenWrap {
+  margin-top: 25px;
+  width: 50%;
+  display: inline-block;
+}
 
+.guessWrap {
+  margin-top: 45px;
+  width: 50%;
+  display: inline-block;
+  float: right;
+}
+form {
+  display: inline-block;
+
+}
 .openStoryTitle {
   font-size: 1.2em;
   display: inline-block;

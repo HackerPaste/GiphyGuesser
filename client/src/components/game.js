@@ -30,14 +30,16 @@ class Game extends React.Component {
 		return(
 	
 			<div>
-				<img src="https://media.giphy.com/media/26hirPEihrhzOXIUo/giphy.gif" alt="Mountain View" height="270" width="480"/>
-				<div className="guessFeed">
-				{dumps}
-				</div>
-				<form>
-					<input className="gameTextInput createTitleInput guessinput" placeholder="Guess Away!" type="text" name="guess"/>
-					<input type="submit" value="Submit"/>
-				</form>
+        <div className="screenWrap">
+				  <img src="https://media.giphy.com/media/26hirPEihrhzOXIUo/giphy.gif" alt="Mountain View" height="290" width="500"/>
+          <Subject />
+        </div>
+        <div className="guessWrap">
+				  <div className="guessFeed">
+				    {dumps}
+				  </div>
+				  <Guess />
+        </div>
 			</div>
 		)
 	}
@@ -46,11 +48,27 @@ class Game extends React.Component {
 const FeedItems = (props) => {
   return (
   	<div className="guessEntry">
-        <img className="feedImages" src={props.pic} alt="Smiley face" height="42" width="42"/>
+        <img className="feedImages" src={props.pic} alt="Smiley face" height="38" width="38"/>
 		<span className="feedTextTitle">{props.tite}</span>
 		<span className="feedText">{props.txt}</span>
     </div>
   	)
+}
+const Subject = (props) =>  {
+  return (
+        <form className="subjectDisplay">
+          <input className="gameTextInput createTitleInput subjectinput" placeholder="Enter Giphy" type="text" name="guess"/>
+          <input type="submit" value="Submit"/>
+        </form>
+    )
+}
+const Guess = (props) =>  {
+  return (
+        <form >
+          <input className="gameTextInput createTitleInput guessinput" placeholder="Guess Away!" type="text" name="guess"/>
+          <input type="submit" value="Submit"/>
+        </form>
+    )
 }
 
 
