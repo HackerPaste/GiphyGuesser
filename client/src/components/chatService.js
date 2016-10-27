@@ -36,13 +36,11 @@ module.exports = class Story extends React.Component {
     this.setState({messageSend: event.target.value});
   }
 
-
-
   render () {
     <div class="container">
       <div className="guessWrap">
         <div className="guessFeed">
-          <ChatDisplay props={this.props}>
+          <FeedDisplay props={this.props}>
           <div id="chatControls">
             <input id="messageInput" type="text" onChange={this.handleMessageInput}/>
             <button id="submit" type="submit" onClick={this.handleSubmit}>Enter</button>
@@ -51,19 +49,21 @@ module.exports = class Story extends React.Component {
       </div>
     </div>
   }
-
 }
 
-
-var chatDisplay = dumpydata.map(function(dump){
-	return <FeedItems pic={dump.image} tite={dump.title} txt={dump.text} />
-})
+const FeedDisplay = (props) => {
+	return (
+      props.map(prop => {
+        <FeedItems pic={prop.user.image} txt={prop.messageRec[prop.messageRec.length - 1]} /> //not sure about that messageRec
+      })
+  )
+}
 
 const FeedItems = (props) => {
   return (
   	<div className="guessEntry">
         <img className="feedImages" src={props.pic} alt="Smiley face" height="38" width="38"/>
-		<span className="feedTextTitle">{props.tite}</span>
+		// <span className="feedTextTitle">{props.tite}</span>
 		<span className="feedText">{props.txt}</span>
     </div>
   	)
