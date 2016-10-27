@@ -6,7 +6,7 @@ var React = require('react')
 	}
   render(){
   	let rows = this.props.gamesGoing.map(game => {
-  		return <GameOn data={game.title} num={game.players} />
+  		return <GameOn data={game.title} num={game.players} pic={game.pic} />
   	})
   	return(
     <div className="gamesWrap">
@@ -25,10 +25,11 @@ const GameOn = (props) => {
   return (
     <li>
     	<div>
-    		<h3>
+        <img className="feedImages" src={props.pic} alt="Smiley face" height="50" width="70"/>
+    		<p >
     			{props.data}
-    		</h3>
-    		<h4>Players: {props.num}</h4>
+    		</p>
+    		<p className="feedPlayerNums">Players: {props.num}</p>
     	</div>
 
     </li>
