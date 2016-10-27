@@ -8,10 +8,7 @@ module.exports = class Lobby extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentUser: this.props.route.user,
-      allStories: [],
-      openStories: [],
-      completeStories: [],
+      game = [],
       displayComplete: false
     }
   this.toggleDisplay = this.toggleDisplay.bind(this)

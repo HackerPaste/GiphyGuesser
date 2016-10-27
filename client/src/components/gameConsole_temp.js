@@ -6,35 +6,35 @@ var io = require('socket.io-client')
 var API = require('../lib/api')
 
 module.exports = class Game extends React.Component {
-	constructor(props){
-		super(props)
+  constructor(props){
+    super(props)
 
-		this.state = {
-			userName: props.user,
-			socket: props.socket, //Should be passed in from game.js
-			gif: props.gif
-		}
-	}
-
-	componentDidMount () {
+    this.state = {
+      userName: props.user,
+      socket: props.socket, //Should be passed in from game.js
+      gif: props.gif
+    }
   }
 
-	render(){
-		return(
-			<div>
+  componentDidMount () {
+  }
+
+  render(){
+    return(
+      <div>
         <div className="screenWrap">
 
-				  <img src="http://i.giphy.com/KAhqdjgzVptM4.gif" alt="Mountain View" height="290" width="500"/>
+          <img src="http://i.giphy.com/KAhqdjgzVptM4.gif" alt="Mountain View" height="290" width="500"/>
           <Subject />
 
         </div>
 
         <Chat props={this.props} />
 
-			</div>
-		)
+      </div>
+    )
 
-	}
+  }
 }
 
 const Subject = (props) =>  {
