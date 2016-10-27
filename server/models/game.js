@@ -30,6 +30,7 @@ const gameSchema = new Schema({
     trim: true,
     match: /[a-z ]{3,40}/i
   },
+  image: String,
 
   // id of the user who set the current keyword
   leader: String,
