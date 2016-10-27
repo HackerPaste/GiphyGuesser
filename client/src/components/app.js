@@ -47,7 +47,6 @@ module.exports = class App extends React.Component {
         />
 
 
-
         {
           //if there is a current user, render the lobby/story with react router
           //else tell the user to login
