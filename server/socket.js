@@ -1,7 +1,7 @@
 const socketio = require('socket.io')
 const stories = require('./controllers/storyController')
-
-module.exports.listen = function(http){
+var io = module.exports;
+io.listen = function(http){
   io = socketio.listen(http)
   //establish socket connection
   io.on('connection', function(client){
