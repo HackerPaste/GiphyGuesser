@@ -110,13 +110,13 @@ app.get('/*', (req, res) => {
 })
 
 //Chat service
-// io.on('message', function (message) { //'message' is the client side event created in react
-//     io.get('alias', function (error, name) { //'pseudo' is the alias of the user
-//         var data = { 'message' : message, alias : name };
-//         io.broadcast.emit('message', data);
-//         console.log("user " + name + " send this : " + message);
-//     })
-// });
+io.on('message', function (message) { //'message' is the client side event created in react
+    io.get('userName', function (error, name) { //'pseudo' is the userName of the user
+        var data = { 'message' : message, userName : name };
+        io.broadcast.emit('message', data);
+        console.log("user " + name + " send this : " + message);
+    })
+});
 
 server.listen(port)
 
