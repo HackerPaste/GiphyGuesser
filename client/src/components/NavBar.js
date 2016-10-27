@@ -5,7 +5,7 @@ module.exports = (props) => {
   return (
     <div className="navbarWrap">
       <div className="headerLogo">
-        <a href="/"><h1>Line4Line</h1></a>
+        <a href="/"><h1>GiffyGuesser</h1></a>
       </div>
       <div className="headerLogButton">
         <Login

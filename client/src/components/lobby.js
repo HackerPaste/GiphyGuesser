@@ -1,6 +1,7 @@
 var React = require('react')
 var OpenStory = require('./OpenStory')
 var Accordion = require('./Accordion')
+var GameBoard = require ('./games.js')
 var API = require('../lib/api')
 module.exports = class Lobby extends React.Component {
   constructor (props) {
@@ -38,16 +39,19 @@ module.exports = class Lobby extends React.Component {
   }
 
   render () {
+    var dummydata = [
+      {title: "Smarty Pants", players: 5},
+      {title: "Arvin Pants", players:3}
+      ];
     var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
       <div>
+      <GameBoard gamesGoing={dummydata} />
         <Accordion />
+        
         <div className='lobby'>
           <div className="lobbyLabels">
-            <h4 className="storyNames">Story Name</h4>
-            <h4 className="numberOfUsers">Number of users</h4>
-            <h4 className="toggleDisplayLink"><a onClick={this.toggleDisplay}>{displayButtonText}</a></h4>
-          </div>
+                    </div>
           { this.state.displayComplete ?
 
             this.state.completeStories.map((story, i) =>

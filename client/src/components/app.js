@@ -18,7 +18,7 @@ module.exports = class App extends React.Component {
   }
 
   componentDidMount () {
-    //Make and initial get request to sign the user in with Facebook
+    //Make an initial get request to sign the user in with Facebook
     //This current user will be used in many places throughout the app.
     API.getUser()
     .then(user => {
@@ -38,13 +38,15 @@ module.exports = class App extends React.Component {
   }
 
   render () {
-    console.log('app user',this.state.currentUser)
+
     return (
       <div>
         <NavBar
           logout={this.logout}
           currentUser={this.state.currentUser}
         />
+
+
         {
           //if there is a current user, render the lobby/story with react router
           //else tell the user to login
@@ -56,6 +58,8 @@ module.exports = class App extends React.Component {
           :
           <div>Please Login</div>
         }
+
+
       </div>
     )
   }
