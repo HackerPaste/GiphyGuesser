@@ -1,70 +1,30 @@
-const socket = io()
-
 var React = require('react')
 var io = require('socket.io-client')
 
 var API = require('../lib/api')
 
-module.exports = class Story extends React.Component {
-  constructor(props){
-    super(props)
-
-    this.state = {
-      userName: props.user,
-      socket: props.socket,
-      game: props.game,
-      messageSend: '',
-      messageRec: []
-    }
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount () {
-    socket.on('message', function(data) {
-      var message = this.state.messageRec.slice()
-      message.push(data)
-      this.setState({messageRec: message})
-    })
-  }
-
-  handleSubmit(event) {
-    this.state.socket.emit('message', this.state.userName, this.state.messageSend)
-  }
-
-  handleMessageInput(event) {
-    this.setState({messageSend: event.target.value});
-  }
-
-  render () {
-    <div class="container">
-      <div className="guessWrap">
-        <div className="guessFeed">
-          <FeedDisplay props={this.props}>
-          <div id="chatControls">
-            <input id="messageInput" type="text" onChange={this.handleMessageInput}/>
-            <button id="submit" type="submit" onClick={this.handleSubmit}>Enter</button>
-          </div>
+module.exports = (props) => (
+  <div class="container">
+    <div className="guessWrap">
+      <div className="guessFeed">
+        {
+          props.messageRec.map(message => {
+            var user = props.users[message.author]
+            <ChatMessage image={user.profilePic} text={message.text} />
+          })
+        }
+        <div id="chatControls">
+          <input id="messageInput" type="text" onChange={props.handleMessageInput}/>
+          <button id="submit" type="submit" onClick={props.handleSubmit}>Enter</button>
         </div>
       </div>
     </div>
-  }
-}
+  </div>
+)
 
-const FeedDisplay = (props) => {
-	return (
-      props.map(prop => {
-        <FeedItems pic={prop.user.image} txt={prop.messageRec[prop.messageRec.length - 1]} /> //not sure about that messageRec
-      })
-  )
-}
-
-const FeedItems = (props) => {
-  return (
-  	<div className="guessEntry">
-        <img className="feedImages" src={props.pic} alt="Smiley face" height="38" width="38"/>
-		// <span className="feedTextTitle">{props.tite}</span>
-		<span className="feedText">{props.txt}</span>
-    </div>
-  	)
-}
+const ChatMessage = (props) => (
+  <div className="guessEntry">
+    <img className="feedImages" src={props.image} alt="Smiley face" height="38" width="38"/>
+  <span className="feedText">{props.text}</span>
+  </div>
+)
