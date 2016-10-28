@@ -8,8 +8,9 @@ module.exports = class Lobby extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      game = [],
-      displayComplete: false
+      game : [],
+      displayComplete: false,
+
     }
   this.toggleDisplay = this.toggleDisplay.bind(this)
   }
@@ -68,28 +69,10 @@ module.exports = class Lobby extends React.Component {
     var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
       <div>
-      <GameBoard gamesGoing={dummydata} />
+        <GameBoard gamesGoing={dummydata} />
         <Accordion />
-
-        <div className='lobby'>
-          <div className="lobbyLabels">
-                    </div>
-          { this.state.displayComplete ?
-
-            this.state.completeStories.map((story, i) =>
-              <OpenStory story={story} key={i} />
-            )
-
-            :
-
-            this.state.openStories.map((story, i) =>
-            <OpenStory story={story} key={i} />
-            )
-
-          }
-
-        </div>
       </div>
+      
     )
   }
 }

@@ -19,14 +19,11 @@ module.exports = (props) => {
 
       <form onSubmit={createStory}>
         <div>
-          <input className="createStoryInput createTitleInput" id="createTitle" type="text" placeholder="Giffy Subject" />
+          <input className="createStoryInput createTitleInput" id="createTitle" type="text" placeholder="Giphy Title" />
         </div>
-        <div>
-          <h3>Number of users</h3>
-          <input className="createStoryInput createNumberInput" id="createNUsers" type="number" min="1" max="10" placeholder="5"/>
-        </div>
+
         <div className='createButtonWrap'>
-          <input className="standardButton blackButton" type="submit" value="Create" />
+          <input type="submit" value="START" />
         </div>
       </form>
 
