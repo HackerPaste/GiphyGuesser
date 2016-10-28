@@ -53,6 +53,7 @@ games.joinGame = function (gameId, userId) {
 
 games.createChannel = function (id) {
   var gameSocket = io.of(`/game_${id}`);
+
   gameSocket.on('connection', function (socket) {
 
     socket.on('message', function (message) {
@@ -89,7 +90,6 @@ games.createChannel = function (id) {
         }
         // user isn't playing in this game, ignore the message
       })
-      .catch(() => )
     })
   })
 }
@@ -104,7 +104,7 @@ games.NotFound = class NotFound extends Error {
 }
 
 games.BadRequest = class BadRequest extends Error {
-  consctructor(reason) {
+  constructor(reason) {
     super()
     this.statusCode = 400
     this.details = { reason: reason }
