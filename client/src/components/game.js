@@ -17,10 +17,12 @@ module.exports = class Game extends React.Component {
       gameOver: {}, //Set in componentDidMount //Send to gameConsole for display
       messageSend: '',
       messageRec: [],
-      users: {}
+      users: {},
+      keyword: ''
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+    this.handleKeywordSubmit = this.handleKeywordSubmit.bind(this);
   }
 
   componentDidMount () {
@@ -56,13 +58,22 @@ module.exports = class Game extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  handleMessageSubmit(event) {
     event.preventDefault()
     this.state.socket.emit('message', {author: props.user.facebookId, text: this.state.messageSend})
   }
 
   handleMessageInput(event) {
     this.setState({messageSend: event.target.value});
+  }
+
+   handleKeywordSubmit(event) {
+    event.preventDefault()
+    this.state.socket.emit('keyword', {keyword: this.state.keyword})
+  }
+
+  handleKeywordInput(event) {
+    this.setState({keyword: event.target.value});
   }
 
   render(){
