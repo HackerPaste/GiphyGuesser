@@ -72,32 +72,36 @@ games.createChannel = function (id) {
 
       // max message length
       message.text = message.text.slice(0, 140)
+      var game = socket.game
 
-      games.find(id).then(game => {
-        if (game.users.includes(message.author)) {
-          // message matches the phrase and the
-          if (cleanseString(message.text) === game.keyword && game.leader !== message.author) {
-            return gameSocket.emit('message', {
-              author: message.author,
-              text: message.text,
-              winning: true
-            })
-          }
-          if (game.leader === message.author) {
-            return gameSocket.emit('message', {
-              author: message.author,
-              text: message.text.replace(new RegExp(game.keyword, i), '****')
-            })
-          }
-
-          // Wasn't the game leader and wasn't the correct phrase
+      if (game.users.includes(message.author)) {
+        // message matches the phrase and the author isn't the leader
+        if (cleanseString(message.text) === game.keyword && game.leader !== message.author) {
+          // send a winning message
           return gameSocket.emit('message', {
             author: message.author,
-            text:message.text
+            text: message.text,
+            winning: true
           })
         }
-        // user isn't playing in this game, ignore the message
-      })
+        // if the leader sent the message
+        if (game.leader === message.author) {
+          // replace the keyword (if it's found) and send the message
+          // to prevent cheating
+          return gameSocket.emit('message', {
+            author: message.author,
+            text: message.text.replace(new RegExp(game.keyword, i), '****')
+          })
+        }
+
+        // Wasn't the game leader and wasn't the correct phrase
+        // so just send the message
+        return gameSocket.emit('message', {
+          author: message.author,
+          text:message.text
+        })
+      }
+      // user isn't playing in this game, ignore the message
     })
   })
 }
