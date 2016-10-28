@@ -19,7 +19,9 @@ games.create = function (topic, userId) {
       games.createChannel(game._id)
       return game
     })
-    .catch(err => throw new BadRequest('could not create game'))
+    .catch(err => {
+      throw new BadRequest('could not create game')
+    })
 }
 
 games.findAll = function () {
