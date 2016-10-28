@@ -1,76 +1,77 @@
 var React = require('react')
+var io = require('socket.io-client')
+var Chat = require('./chatService')
+var GameConsole = require('./gameConsole')
 
-class Game extends React.Component {
-	constructor(props){
-		super(props)
-	}
+var API = require('../lib/api')
 
-	render(){
-	  var dumpydata = [
-      {image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvbGtDqWMwAi2ZEzqTBl7YkGSw3Gg0s5DO-96hXl-TbQeoOy07ow",
-       title: "Sally Samwich",
-       text: "It's a foot?"
-  	  },
-  	  {image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTCHJsXr71fGrlEHCIrQWOv9PVwUwcYQ_1sCa2zTu1kyQRtLfsg_g",
-       title: "Gassy Gregor",
-       text: "Dog Kissing?"
-  	  },
-  	  {image: "http://coolwhatsappdp.in/wp-content/uploads/2016/07/best-girls-dp-for-whatsapp-facebook-profile-pic-1-min-234x300.jpg",
-       title: "Sister Mgcoo",
-       text: "I'm voting for!"
-  	  },
-  	  {image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvbGtDqWMwAi2ZEzqTBl7YkGSw3Gg0s5DO-96hXl-TbQeoOy07ow",
-       title: "Sally Samwich",
-       text: "It's a foot?"
-  	  },
-      ];
-		var dumps = dumpydata.map(function(dump){
-  		return <FeedItems pic={dump.image} tite={dump.title} txt={dump.text} />
-  	})
-		return(
-	
-			<div>
-        <div className="screenWrap">
-				  <img src="https://media.giphy.com/media/26hirPEihrhzOXIUo/giphy.gif" alt="Mountain View" height="290" width="500"/>
-          <Subject />
-        </div>
-        <div className="guessWrap">
-				  <div className="guessFeed">
-				    {dumps}
-				  </div>
-				  <Guess />
-        </div>
-			</div>
-		)
-	}
-}
+module.exports = class Game extends React.Component {
+  constructor(props){
+    super(props)
 
-const FeedItems = (props) => {
-  return (
-  	<div className="guessEntry">
-        <img className="feedImages" src={props.pic} alt="Smiley face" height="38" width="38"/>
-		<span className="feedTextTitle">{props.tite}</span>
-		<span className="feedText">{props.txt}</span>
-    </div>
-  	)
-}
-const Subject = (props) =>  {
-  return (
-        <form className="subjectDisplay">
-          <input className="gameTextInput createTitleInput subjectinput" placeholder="Enter Giphy" type="text" name="guess"/>
-          <input type="submit" value="Submit"/>
-        </form>
+    this.state = {
+      socket: io.connect(`/game_${props.game_id}`),
+      game: '', //Set in componentDidMount getGame
+      gameLeader: {}, //Set in componentDidMount newRound //Send to gameConsole for display
+      gif: '', //Set in componentDidMount roundStart //Send to gameConsole for display
+      gameOver: {}, //Set in componentDidMount //Send to gameConsole for display
+      messageSend: '',
+      messageRec: [],
+      users: {}
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount () {
+    API.getGame(this.props.game_id)
+      .then(function(game) {
+        this.setState({game: game})
+      })
+
+    this.state.socket.on('newRound', function(data) {
+      this.setState({gameLeader: data})
+    })
+
+    this.state.socket.on('roundStart', function(data) {
+      this.setState({gif: data})
+    })
+
+    this.state.socket.on('roundEnd', function(data) {
+      this.setState({gameOver: data})
+    })
+
+    this.state.socket.on('playerJoined', function(data) {
+      this.setState({playerJoined: data})
+    })
+
+    this.state.socket.on('playerLeft', function(data) {
+      this.setState({playerLeft: data})
+    })
+
+    this.state.socket.on('message', function(data) {
+      var message = this.state.messageRec.slice()
+      message.push(data)
+      this.setState({messageRec: message})
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.state.socket.emit('message', {author: props.user.facebookId, text: this.state.messageSend})
+  }
+
+  handleMessageInput(event) {
+    this.setState({messageSend: event.target.value});
+  }
+
+  render(){
+    return(
+      <div>
+        // <GameConsole props={this.props} />
+        <Chat users={users} messageRec={messageRec} />
+      </div>
     )
+
+  }
 }
-const Guess = (props) =>  {
-  return (
-        <form >
-          <input className="gameTextInput createTitleInput guessinput" placeholder="Guess Away!" type="text" name="guess"/>
-          <input type="submit" value="Submit"/>
-        </form>
-    )
-}
-
-
-
-module.exports = Game

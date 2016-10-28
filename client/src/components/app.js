@@ -1,6 +1,7 @@
 var React = require('react')
 var { Router, Route, Link, IndexRoute, hashHistory, browserHistory } = require('react-router')
 var Lobby = require('./lobby')
+var Game = require('./game')
 var Story = require('./story')
 var Login = require('./login')
 var CreateStory = require('./CreateStory')
@@ -52,7 +53,8 @@ module.exports = class App extends React.Component {
           //else tell the user to login
           this.state.currentUser ?
             <Router history={hashHistory}>
-              <Route path='/' component={Lobby} />
+              <Route path='/' component={Lobby} user={this.state.currentUser}/>
+              <Route path='/game' component={Game} />
               <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
             </Router>
           :
