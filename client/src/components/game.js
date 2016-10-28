@@ -83,7 +83,7 @@ module.exports = class Game extends React.Component {
     this.setState({keyword: event.target.value});
   }
 
-  render(){
+  render() {
     return(
       <div>
         <GameConsole gif={this.state.gif} gameOver={this.state.gameOver} gameOverFlag={this.state.gameOverFlag} handleKeywordSubmit={this.handleKeywordSubmit} handleKeywordInput={this.handleKeywordInput}/>

@@ -1,78 +1,37 @@
 var React = require('react')
-var OpenStory = require('./OpenStory')
-var Accordion = require('./Accordion')
-var GameBoard = require ('./games.js')
+
+var Accordion = require('./accordion')
+var GamesList = require ('./games.js')
 var API = require('../lib/api')
 
 module.exports = class Lobby extends React.Component {
   constructor (props) {
     super(props)
+
     this.state = {
-      game : [],
+      games : [],
       displayComplete: false,
 
     }
-  this.toggleDisplay = this.toggleDisplay.bind(this)
   }
 
   componentDidMount () {
-    //get an array of all the stories from the db that need more users
-    API.getStories()
-      .then(stories => {
-        console.log('Got stories: ', stories);
-        let completeStories = stories.filter(story => story.complete)
-        console.log('comstor: ',completeStories)
-        let openStories = stories.filter(story => story.length > story.lines.length)
-        console.log('openstor: ', openStories)
-        this.setState({
-          allStories: stories,
-          openStories: openStories,
-          completeStories: completeStories
-        })
+    API.getGames()
+      .then(data => {
+        this.setState({games: data})
+      })
+      .catch(err => {
+        console.log("ERROR getGames API call failed: ", err)
       })
   }
 
-  toggleDisplay () {
-    this.setState({
-      displayComplete: !this.state.displayComplete
-    })
-  }
-
   render () {
-    var dummydata = [
-      {title: "Rolling Bones",
-       players: 5,
-       pic: "https://media.giphy.com/media/3orif3fITs4rQqSXN6/giphy.gif"
-      },
-      {title: "Cat Claws",
-       players: 5,
-       pic: "https://media.giphy.com/media/3o7TKMhrIzsI8eyxfa/giphy.gif"
-      },
-      {title: "Hair Lovers",
-       players: 2,
-       pic: "https://media.giphy.com/media/ayYTO2cun7TUs/giphy.gif"
-      },
-      {title: "Wreckers",
-       players: 3,
-       pic: "https://media.giphy.com/media/7gcZKX1Dlo3iE/giphy.gif"
-      },
-      {title: "Rolling Bones",
-       players: 5,
-       pic: "https://media.giphy.com/media/3orif3fITs4rQqSXN6/giphy.gif"
-      },
-      {title: "Cat Claws",
-       players: 5,
-       pic: "https://media.giphy.com/media/3o7TKMhrIzsI8eyxfa/giphy.gif"
-      },
-
-      ];
-    var displayButtonText = this.state.displayComplete ? 'Show Open' : 'Show Complete'
     return (
       <div>
-        <GameBoard gamesGoing={dummydata} />
+        <GamesList gamesGoing={this.state.games} />
         <Accordion />
       </div>
-      
+
     )
   }
 }

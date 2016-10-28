@@ -19,7 +19,7 @@ module.exports = class Accordion extends React.Component {
     })
   }
 
-  render () {
+  render() {
 
     const buttonText = this.state.active ? 'Hide' : '+ Create a Game'
     const sliderClass = this.state.active ? "show" : "hide"
