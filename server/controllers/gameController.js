@@ -1,5 +1,5 @@
 var axios = require('axios')
-var io = require('../socket')
+var io = require('../socket').io
 const Game = require('../models/game')
 
 var giphy = axios.create({ baseURL: 'http://api.giphy.com/v1/gifs' });
