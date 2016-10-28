@@ -53,7 +53,7 @@ games.joinGame = function (gameId, userId) {
 
 games.createChannel = function (id) {
   var gameSocket = io.of(`/game_${id}`);
-  
+
   gameSocket.use(function (socket, next) {
     games.find(id).then(game => {
       socket.game = game
@@ -117,4 +117,8 @@ games.BadRequest = class BadRequest extends Error {
     this.statusCode = 400
     this.details = { reason: reason }
   }
+}
+
+function cleanseString (string) {
+  return string.replace(/\s+/g, ' ').trim().toLowerCase();
 }
