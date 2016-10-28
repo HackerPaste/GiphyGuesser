@@ -17,6 +17,12 @@ router.get('/games', isAuthed, function (req, res) {
     .catch(respond(res))
 })
 
+router.post('/games', isAuthed, function (req, res) {
+  games.create(req.body.topic, req.user._id)
+    .then(respond(res, 201))
+    .catch(respond(res))
+})
+
 router.get('/games/:gameId', function (req, res) {
   games.find(req.params.gameId)
     .then(respond(res))
