@@ -68,8 +68,8 @@ module.exports = class Game extends React.Component {
   render(){
     return(
       <div>
-        // <GameConsole props={this.props} />
-        <Chat users={users} messageRec={messageRec} />
+        <GameConsole gif={this.state.gif} />
+        <Chat users={this.state.users} messageRec={this.state.messageRec} />
       </div>
     )
 
