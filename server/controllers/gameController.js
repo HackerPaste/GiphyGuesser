@@ -61,7 +61,7 @@ games.joinGame = function (gameId, user) {
             })
         }
 
-        return new games.BadRequest(`game ${gameId} is full`)
+        throw new games.BadRequest(`game ${gameId} is full`)
       }
     })
 }
