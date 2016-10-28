@@ -1,9 +1,4 @@
-const socket = io()
-
 var React = require('react')
-var io = require('socket.io-client')
-
-var API = require('../lib/api')
 
 module.exports = class Game extends React.Component {
   constructor(props){

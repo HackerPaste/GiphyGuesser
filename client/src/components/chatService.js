@@ -1,7 +1,4 @@
 var React = require('react')
-var io = require('socket.io-client')
-
-var API = require('../lib/api')
 
 module.exports = (props) => (
   <div class="container">
