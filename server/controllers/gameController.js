@@ -48,6 +48,50 @@ games.joinGame = function (gameId, userId) {
     })
 }
 
+games.createChannel = function (id) {
+  var gameSocket = io.of(`/game_${id}`);
+  gameSocket.on('connection', function (socket) {
+
+    socket.on('message', function (message) {
+      // do nothing for invalid messages
+      if (!message.text || message.text.length < 3 || !message.author ) {
+        return
+      }
+
+      // max message length
+      message.text = message.text.slice(0, 140)
+
+      games.find(id).then(game => {
+        if (game.users.includes(message.author)) {
+          // message matches the phrase and the
+          if (cleanseString(message.text) === game.keyword && game.leader !== message.author) {
+            return gameSocket.emit('message', {
+              author: message.author,
+              text: message.text,
+              winning: true
+            })
+          }
+          if (game.leader === message.author) {
+            return gameSocket.emit('message', {
+              author: message.author,
+              text: message.text.replace(new RegExp(game.keyword, i), '****')
+            })
+          }
+
+          // Wasn't the game leader and wasn't the correct phrase
+          return gameSocket.emit('message', {
+            author: message.author,
+            text:message.text
+          })
+        }
+        // user isn't playing in this game, ignore the message
+      })
+      .catch(() => )
+    })
+  })
+}
+
+
 games.NotFound = class NotFound extends Error {
   constructor(id) {
     super()
