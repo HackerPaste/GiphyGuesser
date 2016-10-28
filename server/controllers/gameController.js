@@ -105,6 +105,26 @@ games.createChannel = function (id) {
       }
       // user isn't playing in this game, ignore the message
     })
+
+    socket.on('keyword', function (data) {
+      if (!socket.request.user.facebookId !== socket.game.leader) {
+        return socket.emit('error', new BadRequest('player is not the game leader'))
+      }
+
+      if (!data.keyword || data.keyword.length > 40) {
+        return socket.emit('error', new BadRequest('keyword is required'))
+      }
+
+      var keyword = cleanseString(data.keyword)
+
+      games.fetchGiphy(keyword)
+        .then(src => {
+          return socket.emit('roundStart', { image: src })
+        })
+        .catch(err => {
+          return socket.emit('error', { reason: 'unknown api error' })
+        })
+    })
   })
 }
 
