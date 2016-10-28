@@ -69,7 +69,7 @@ module.exports = class Game extends React.Component {
     return(
       <div>
         // <GameConsole props={this.props} />
-        <Chat users={users} message={messageRec} />
+        <Chat users={users} messageRec={messageRec} />
       </div>
     )
 
