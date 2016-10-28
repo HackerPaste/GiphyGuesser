@@ -18,11 +18,14 @@ module.exports = class Game extends React.Component {
       messageSend: '',
       messageRec: [],
       users: {},
-      keyword: ''
+      keyword: '',
+      gameOverFlag: false
     }
 
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+    this.handleMessageInput = this.handleMessageInput.bind(this);
     this.handleKeywordSubmit = this.handleKeywordSubmit.bind(this);
+    this.handleKeywordInput = this.handleKeywordInput.bind(this);
   }
 
   componentDidMount () {
@@ -32,6 +35,7 @@ module.exports = class Game extends React.Component {
       })
 
     this.state.socket.on('newRound', function(data) {
+      this.setState({gameOverFlag: false})
       this.setState({gameLeader: data})
     })
 
@@ -40,6 +44,9 @@ module.exports = class Game extends React.Component {
     })
 
     this.state.socket.on('roundEnd', function(data) {
+
+//Everyone gets the event, not everyone is winner - need logic for losers
+      this.setState({gameOverFlag: true})
       this.setState({gameOver: data})
     })
 
@@ -79,7 +86,7 @@ module.exports = class Game extends React.Component {
   render(){
     return(
       <div>
-        <GameConsole gif={this.state.gif} />
+        <GameConsole gif={this.state.gif} gameOver={this.state.gameOver} gameOverFlag={this.state.gameOverFlag} handleKeywordSubmit={this.handleKeywordSubmit} handleKeywordInput={this.handleKeywordInput}/>
         <Chat users={this.state.users} messageRec={this.state.messageRec} />
       </div>
     )
