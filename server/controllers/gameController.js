@@ -19,7 +19,13 @@ games.create = function (topic, userId) {
       games.createChannel(game._id)
       return game
     })
-    .catch(err => new BadRequest('could not create game'))
+    .catch(err => {
+      throw new BadRequest('could not create game')
+    })
+}
+
+games.findAll = function () {
+  return Game.find({}).populate('users', 'facebookId')
 }
 
 games.find = function (id) {
@@ -27,17 +33,17 @@ games.find = function (id) {
     return Promise.reject(new BadRequest('gameId is required'))
   }
 
-  return Game.findOne({_id: id})
+  return Game.findOne({_id: id}).populate('users')
     .then(game => {
       if (!game) {
-        return new games.NotFound(id)
+        throw new games.NotFound(id)
       }
       return game
     })
 }
 
 games.joinGame = function (gameId, user) {
-  return games.find(gameId)
+  return games.find(gameId).populate('users')
     .then(game => {
       var socket
       if (!Object.keys(io.nsps).includes(gameId)) {
@@ -45,17 +51,17 @@ games.joinGame = function (gameId, user) {
       } else {
         socket = io.of(`/game_${gameId}`);
       }
-      if (!game.users.includes(user.facebookId)) {
+      if (!game.users.map(user => user.facebookId).includes(user.facebookId)) {
         if (game.users.length < game.maxPlayers) {
-          game.users.push(user.facebookId)
-          return Game.update({_id: gameId}, { $push: { users: user.facebookId } })
+          game.users.push(user)
+          return Game.update({_id: gameId}, { $push: { users: user._id } })
             .then(() => {
               socket.emit('playerJoined', user)
               return game
             })
         }
 
-        return new games.BadRequest(`game ${gameId} is full`)
+        throw new games.BadRequest(`game ${gameId} is full`)
       }
     })
 }
@@ -65,11 +71,12 @@ games.createChannel = function (id) {
 
   gameSocket.on('connection', function (socket) {
     socket.use(function (socket, next) {
-      games.find(id).then(game => {
-        socket.game = game
-        next()
-      })
-      .catch(() => next(new NotFound(id)))
+      games.find(id).populate('users')
+        .then(game => {
+          socket.game = game
+          next()
+        })
+        .catch(() => next(new NotFound(id)))
     })
 
     socket.on('message', function (message) {
@@ -82,7 +89,7 @@ games.createChannel = function (id) {
       message.text = message.text.slice(0, 140)
       var game = socket.game
 
-      if (game.users.includes(message.author)) {
+      if (game.users.map(user => user.facebookId).includes(message.author)) {
         // message matches the phrase and the author isn't the leader
         if (cleanseString(message.text) === game.keyword && game.leader !== message.author) {
           // send a winning message
