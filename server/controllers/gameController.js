@@ -1,6 +1,8 @@
 var axios = require('axios')
-var giphy = axios.create({ baseURL: 'http://api.giphy.com/v1/gifs' });
+var io = require('../socket')
+const Game = require('../models/game')
 
+var giphy = axios.create({ baseURL: 'http://api.giphy.com/v1/gifs' });
 const games = module.exports
 
 games.fetchGiphy = function (keyword) {
