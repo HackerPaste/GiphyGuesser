@@ -24,12 +24,14 @@ var React = require('react')
 const GameOn = (props) => {
   return (
     <li>
-    	<div>
-        <img className="feedImages" src={props.pic} alt="Smiley face" height="50" width="70"/>
-    		<p >
+    	<div className="lobbyFeedcontainer">
+        <img className="lobbyFeedImages" src={props.pic} alt="Smiley face" height="170" width="280"/>
+    		<div className="lobbyFeedInfo">
+        <p className="gameFeedTitles">
     			{props.data}
     		</p>
     		<p className="feedPlayerNums">Players: {props.num}</p>
+        </div>
     	</div>
 
     </li>

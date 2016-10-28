@@ -7,7 +7,7 @@ module.exports = (props) => (
         {
           props.messageRec.map(message => {
             var user = props.users[message.author]
-            <ChatMessage image={user.profilePic} text={message.text} />
+            return <ChatMessage image={user.profilePic} text={message.text} />
           })
         }
         <div id="chatControls">

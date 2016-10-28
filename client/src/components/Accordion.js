@@ -25,10 +25,10 @@ module.exports = class Accordion extends React.Component {
     const sliderClass = this.state.active ? "show" : "hide"
 
     return (
-      <div>
+      <div className="accordianSide">
         <div className="toggleButtonWrap">
           <button className="standardButton whiteButton" onClick={this.toggle}>{buttonText}</button>
-          <StartButton />
+
         </div>
         <div className={sliderClass}>
           <CreateStory />
