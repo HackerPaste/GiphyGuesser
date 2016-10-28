@@ -53,6 +53,14 @@ games.joinGame = function (gameId, userId) {
 
 games.createChannel = function (id) {
   var gameSocket = io.of(`/game_${id}`);
+  
+  gameSocket.use(function (socket, next) {
+    games.find(id).then(game => {
+      socket.game = game
+      next()
+    })
+    .catch(() => next(new NotFound(id)))
+  })
 
   gameSocket.on('connection', function (socket) {
 
