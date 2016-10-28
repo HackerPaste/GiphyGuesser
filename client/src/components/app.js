@@ -54,8 +54,7 @@ module.exports = class App extends React.Component {
           this.state.currentUser ?
             <Router history={hashHistory}>
               <Route path='/' component={Lobby} user={this.state.currentUser}/>
-              <Route path='/game' component={Game} />
-              <Route path='/stories/:id' component={Story} user={this.state.currentUser} />
+              <Route path='/game/:gameId' user={this.state.currentUser} component={Game} />
             </Router>
           :
           <div>Please Login</div>
