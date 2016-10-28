@@ -1,18 +1,34 @@
 var React = require('react')
+var io = require('socket.io-client')
 
- class GameBoard extends React.Component {
+var API = require('../lib/api')
+
+module.exports = class GameBoard extends React.Component {
 	constructor(props){
-		super()
+		super(props)
+
+    this.state = {
+      gameTopic: '',
+
+    }
+
+    this.handleGameCreateSubmit = this.handleMessageSubmit.bind(this);
 	}
+
+  componentDidMount () {
+
+  }
+
   render(){
-  	let rows = this.props.gamesGoing.map(game => {
-  		return <GameOn data={game.title} num={game.players} pic={game.pic} />
-  	})
   	return(
     <div className="gamesWrap">
 	      <div className="gameInProgress">
 	      	<ul>
-	      		{rows}
+	      		{
+              this.props.gamesGoing.map(game => {
+                return <GameOn data={game.title} pic={game.pic} />
+              })
+            }
 	      	</ul>
 	      </div>
 	    </div>
@@ -30,18 +46,8 @@ const GameOn = (props) => {
         <p className="gameFeedTitles">
     			{props.data}
     		</p>
-    		<p className="feedPlayerNums">Players: {props.num}</p>
         </div>
     	</div>
-
     </li>
-
   )
 }
-
-module.exports = GameBoard
-
-
-
-
-

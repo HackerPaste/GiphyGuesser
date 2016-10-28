@@ -19,6 +19,15 @@ module.exports = class Accordion extends React.Component {
     })
   }
 
+  handleGameCreateSubmit(event) {
+    event.preventDefault()
+    API.createGame(this.state.gameTopic)
+  }
+
+  handleGameCreateInput(event) {
+    this.setState({gameTopic: event.target.value});
+  }
+
   render() {
 
     const buttonText = this.state.active ? 'Hide' : '+ Create a Game'

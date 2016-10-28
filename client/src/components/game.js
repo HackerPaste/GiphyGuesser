@@ -10,7 +10,7 @@ module.exports = class Game extends React.Component {
     super(props)
 
     this.state = {
-      socket: io.connect(`/game_${props.game_id}`),
+      socket: io.connect(`/game_${props.game_id}`), //Should happen in games.js
       game: '',
       gameLeader: {},
       gif: '',
