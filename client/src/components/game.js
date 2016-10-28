@@ -1,7 +1,7 @@
 var React = require('react')
 var io = require('socket.io-client')
 var Chat = require('./chatService')
-var GameConsole = require('./gameConsole_temp')
+var GameConsole = require('./gameConsole')
 
 var API = require('../lib/api')
 
