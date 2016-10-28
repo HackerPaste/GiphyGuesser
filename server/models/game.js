@@ -19,7 +19,7 @@ const gameSchema = new Schema({
     trim: true,
     match: /[a-z ]{3,40}/i
   },
-  users: [ String ],
+  users: [ {type: Schema.Types.ObjectId, ref: 'User'}],
   ended: { type: Boolean, default: false },
   maxPlayers: Number,
 
