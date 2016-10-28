@@ -11,10 +11,10 @@ module.exports = class Game extends React.Component {
 
     this.state = {
       socket: io.connect(`/game_${props.game_id}`),
-      game: '', //Set in componentDidMount getGame
-      gameLeader: {}, //Set in componentDidMount newRound //Send to gameConsole for display
-      gif: '', //Set in componentDidMount roundStart //Send to gameConsole for display
-      gameOver: {}, //Set in componentDidMount //Send to gameConsole for display
+      game: '',
+      gameLeader: {},
+      gif: '',
+      gameOver: {},
       messageSend: '',
       messageRec: [],
       users: {},
