@@ -39,6 +39,9 @@ games.find = function (id) {
 games.joinGame = function (gameId, userId) {
   return games.find(gameId)
     .then(game => {
+      if (!Object.keys(io.nsps).includes(gameId)) {
+        createChannel(gameId)
+      }
       if (!game.users.includes(userId)) {
         if (game.users.length < game.maxPlayers) {
           game.users.push(userId)
