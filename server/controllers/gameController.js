@@ -15,7 +15,10 @@ games.create = function (topic, userId) {
     return Promise.reject(new BadRequest('topic and userId are required'))
   }
   return new Game({ topic: topic, leader: userId })
-    .save().then(() => game)
+    .save().then(() => {
+      games.createChannel(game._id)
+      return game
+    })
     .catch(err => new BadRequest('could not create game'))
 }
 
