@@ -23,6 +23,12 @@ router.get('/games/:gameId', function (req, res) {
     .catch(respond(res))
 })
 
+router.put('/games/:gameId', function (req, res) {
+  games.joinGame(req.params.gameId, req.user._id)
+    .then(respond(res))
+    .catch(respond(res))
+})
+
 router.get('/user', isAuthed, function(req, res) {
   res.json(req.user)
 })
