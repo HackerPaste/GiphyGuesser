@@ -6,8 +6,8 @@ var giphy = axios.create({ baseURL: 'http://api.giphy.com/v1/gifs' });
 const games = module.exports
 
 games.fetchGiphy = function (keyword) {
-    return giphy.get(`/search?q=${keyword}&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
-      .then(res => res.data)
+  return giphy.get(`/search?q=${keyword}&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
+    .then(res => res.data)
 }
 
 games.create = function (topic, userId) {
