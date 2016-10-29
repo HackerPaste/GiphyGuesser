@@ -22,7 +22,7 @@ module.exports = class Accordion extends React.Component {
   handleGameCreateSubmit(event) {
     event.preventDefault()
     API.createGame(this.state.gameTopic)
-      .then(() => this.context.router.push(`/game_${props.game_id}`))
+      .then((game) => window.location = `/game/${game._id}`)
   }
 
   handleGameCreateInput(event) {

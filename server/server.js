@@ -115,8 +115,8 @@ app.get('/logout', (req,res) => {
 app.get('/auth/facebook', passport.authenticate('facebook'))
 // facebook will call this URL
 app.get('/auth/facebook/return', passport.authenticate('facebook', {
-  failureRedirect: '/#/fail',
-  successRedirect: '/#/',
+  failureRedirect: '/fail',
+  successRedirect: '/',
 }))
 
 
