@@ -10,11 +10,11 @@ module.exports = class Game extends React.Component {
     super(props)
 
     this.state = {
-      socket: io.connect(`/game_${props.game_id}`),
-      game: '', //Set in componentDidMount getGame
-      gameLeader: {}, //Set in componentDidMount newRound //Send to gameConsole for display
-      gif: '', //Set in componentDidMount roundStart //Send to gameConsole for display
-      gameOver: {}, //Set in componentDidMount //Send to gameConsole for display
+      socket: io.connect(`/game_${props.game_id}`), //Should happen in games.js
+      game: '',
+      gameLeader: {},
+      gif: '',
+      gameOver: {},
       messageSend: '',
       messageRec: [],
       users: {},
@@ -83,7 +83,7 @@ module.exports = class Game extends React.Component {
     this.setState({keyword: event.target.value});
   }
 
-  render(){
+  render() {
     return(
       <div>
         <GameConsole gif={this.state.gif} gameOver={this.state.gameOver} gameOverFlag={this.state.gameOverFlag} handleKeywordSubmit={this.handleKeywordSubmit} handleKeywordInput={this.handleKeywordInput}/>

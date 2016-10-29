@@ -6,17 +6,12 @@ API.getUser = function () {
     .then(res => res.data)
 }
 
-API.createStory = function (story) {
-  return http.post('/api/stories', story)
+API.getGames = function () {
+  return http.get('/api/games')
     .then(res => res.data)
 }
 
-API.getStories = function() {
-  return http.get('/api/stories')
-    .then(res => res.data)
-}
-
-API.getStory = function(storyId) {
-  return http.get(`/api/stories/${storyId}`)
+API.createGame = function (topic) {
+  return http.post('/api/games', {topic: topic})
     .then(res => res.data)
 }
