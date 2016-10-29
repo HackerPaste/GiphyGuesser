@@ -1,5 +1,5 @@
 var React = require('react')
-var { Router, Route, Link, IndexRoute, hashHistory, browserHistory } = require('react-router')
+var { Router, Route, Link, IndexRoute, browserHistory } = require('react-router')
 var Lobby = require('./lobby')
 var Game = require('./game')
 var NavBar = require('./NavBar')
