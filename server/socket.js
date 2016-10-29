@@ -1,5 +1,4 @@
 const socketio = require('socket.io')
-module.exports.io = null
 module.exports.listen = function(http){
   var io = socketio.listen(http)
   module.exports.io = io;

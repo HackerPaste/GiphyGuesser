@@ -6,22 +6,23 @@ var giphy = axios.create({ baseURL: 'http://api.giphy.com/v1/gifs' });
 const games = module.exports
 
 games.fetchGiphy = function (keyword) {
-  return giphy.get(`/search?q=${keyword}&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
-    .then(res => res.data)
+  return giphy.get(`/random?tag=${keyword}&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
+    .then(res => res.data.data)
 }
 
 games.create = function (topic, userId) {
   if (!topic || !userId) {
-    return Promise.reject(new BadRequest('topic and userId are required'))
+    return Promise.reject(new games.BadRequest('topic and userId are required'))
   }
   return new Game({ topic: topic, leader: userId })
-    .save().then(() => {
+    .save().then((game) => {
       games.createChannel(game._id)
+      io.emit('gameCreated', game)
       return game
     })
-    .catch(err => {
-      throw new BadRequest('could not create game')
-    })
+    // .catch(err => {
+    //   throw new games.BadRequest('could not create game')
+    // })
 }
 
 games.findAll = function () {
@@ -30,7 +31,7 @@ games.findAll = function () {
 
 games.find = function (id) {
   if (!id) {
-    return Promise.reject(new BadRequest('gameId is required'))
+    return Promise.reject(new games.BadRequest('gameId is required'))
   }
 
   return Game.findOne({_id: id}).populate('users')
@@ -46,7 +47,7 @@ games.joinGame = function (gameId, user) {
   return games.find(gameId).populate('users')
     .then(game => {
       var socket
-      if (!Object.keys(io.nsps).includes(gameId)) {
+      if (!Object.keys(io.nsps).includes(`/game_${gameId}`)) {
         socket = games.createChannel(gameId)
       } else {
         socket = io.of(`/game_${gameId}`);
@@ -67,17 +68,22 @@ games.joinGame = function (gameId, user) {
 }
 
 games.createChannel = function (id) {
-  var gameSocket = io.of(`/game_${id}`);
+  var gameSocket = io.of(`/game_${id}`)
 
-  gameSocket.on('connection', function (socket) {
-    socket.use(function (socket, next) {
-      games.find(id).populate('users')
-        .then(game => {
+  gameSocket.use(function (socket, next) {
+    Game.findOne({_id: id}).populate('users')
+      .then(game => {
+        if (game) {
           socket.game = game
           next()
-        })
-        .catch(() => next(new NotFound(id)))
-    })
+        } else {
+          throw new games.NotFound(id)
+        }
+      })
+      .catch(console.error)
+  })
+  gameSocket.on('connection', function (socket) {
+    console.log(`new connection on channel '/game_${id}'`)
 
     socket.on('message', function (message) {
       // do nothing for invalid messages
@@ -120,23 +126,29 @@ games.createChannel = function (id) {
     })
 
     socket.on('keyword', function (data) {
-      if (!socket.request.user.facebookId !== socket.game.leader) {
-        return gameSocket.emit('error', new BadRequest('player is not the game leader'))
+      console.log('User: ', socket.request.user)
+      console.log('Leader: ', socket.game.leader)
+      if (socket.request.user.facebookId != socket.game.leader) {
+        console.log('got keyword from non-leader', data)
+        return gameSocket.emit('error', new games.BadRequest('player is not the game leader'))
       }
 
       if (!data.keyword || data.keyword.length > 40) {
-        return gameSocket.emit('error', new BadRequest('keyword is required'))
+        console.log('keyword invalid')
+        return gameSocket.emit('error', new games.BadRequest('keyword is required'))
       }
 
       var keyword = cleanseString(data.keyword)
 
       games.fetchGiphy(keyword)
-        .then(src => {
-          return gameSocket.emit('roundStart', { image: src })
+        .then(image => {
+          console.log('fetched giphy')
+          return gameSocket.emit('roundStart', { image: image.image_url })
         })
-        .catch(err => {
-          return gameSocket.emit('error', { reason: 'unknown api error' })
-        })
+        // .catch(err => {
+        //   console.log('failed getting giphy', err)
+        //   return gameSocket.emit('error', { reason: 'unknown api error' })
+        // })
     })
   })
   return gameSocket
@@ -162,3 +174,8 @@ games.BadRequest = class BadRequest extends Error {
 function cleanseString (string) {
   return string.replace(/\s+/g, ' ').trim().toLowerCase();
 }
+
+// force sockets to be created for any existing games on server start
+Game.find().then(res => {
+  res.forEach(game => games.createChannel(game._id))
+})
