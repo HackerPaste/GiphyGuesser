@@ -88,6 +88,7 @@ module.exports = class Game extends React.Component {
 
    handleKeywordSubmit(event) {
     event.preventDefault()
+    this.setState({gameLeader: this.state.currentUser})
     this.state.socket.emit('keyword', {keyword: this.state.keyword})
   }
 
@@ -98,9 +99,17 @@ module.exports = class Game extends React.Component {
   render() {
     // console.log("this.state.messageRec: ", this.state.messageRec)
     // console.log("this.state.socket: ", this.state.socket)
+    // console.log("gameLeader: ", this.state.gameLeader)
+    console.log("this.state.gameOverFlag: ", this.state.gameOverFlag)
     return(
       <div>
         <GameConsole gif={this.state.gif} gameOver={this.state.gameOver} gameOverFlag={this.state.gameOverFlag} handleKeywordSubmit={this.handleKeywordSubmit} handleKeywordInput={this.handleKeywordInput}/>
+          {
+            this.state.gameOverFlag ?
+            <p>GameOVER!</p>
+            :
+            <p>Keep guessing!</p>
+          }
         <Chat user={this.state.currentUser} messageRec={this.state.messageRec} handleMessageSubmit={this.handleMessageSubmit} handleMessageInput={this.handleMessageInput}/>
       </div>
     )

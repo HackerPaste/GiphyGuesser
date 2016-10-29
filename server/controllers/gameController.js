@@ -84,9 +84,37 @@ games.createChannel = function (id) {
   })
   gameSocket.on('connection', function (socket) {
     console.log(`new connection on channel '/game_${id}'`)
+    var keyword
+
+    socket.on('keyword', function (data) {
+      console.log('User: ', socket.request.user)
+      console.log('Leader: ', socket.game.leader)
+      if (socket.request.user.facebookId != socket.game.leader) {
+        console.log('got keyword from non-leader', data)
+        return gameSocket.emit('error', new games.BadRequest('player is not the game leader'))
+      }
+
+      if (!data.keyword || data.keyword.length > 40) {
+        console.log('keyword invalid')
+        return gameSocket.emit('error', new games.BadRequest('keyword is required'))
+      }
+
+      keyword = cleanseString(data.keyword)
+
+      games.fetchGiphy(keyword)
+        .then(image => {
+          console.log('fetched giphy')
+          return gameSocket.emit('roundStart', { image: image.image_url })
+        })
+        // .catch(err => {
+        //   console.log('failed getting giphy', err)
+        //   return gameSocket.emit('error', { reason: 'unknown api error' })
+        // })
+    })
+
     socket.on('message', function (message) {
       // do nothing for invalid messages
-      console.log("message received: ", message)
+      // console.log("message received: ", message)
       if (!message.text || message.text.length < 3 || !message.author ) {
         return
       }
@@ -95,11 +123,23 @@ games.createChannel = function (id) {
       message.text = message.text.slice(0, 140)
       var game = socket.game
 
+      // console.log("game.users.map(user => user.facebookId).includes(message.author): ", game.users.map(user => user.facebookId).includes(message.author))
+      // console.log("game.users: ", game.users, "message.author: ", message.author)
+      // console.log("game: ", game)
       if (game.users.map(user => user.facebookId).includes(message.author)) {
         // message matches the phrase and the author isn't the leader
-        if (cleanseString(message.text) === game.keyword && game.leader !== message.author) {
+        // console.log("cleanseString(message.text) === game.keyword: ", cleanseString(message.text) === game.keyword)
+        console.log("cleanseString(message.text) === keyword, ", cleanseString(message.text) === keyword)
+        if (cleanseString(message.text) === keyword ) { //I took this part out for the demonstration: && game.leader !== message.author
           // send a winning message
-          return gameSocket.emit('message', {
+          console.log("WINNER WINNER CHICKEN DINNER")
+          gameSocket.emit('message', {
+            author: message.author,
+            text: message.text,
+            winning: true
+          })
+
+          return gameSocket.emit('roundEnd', {
             author: message.author,
             text: message.text,
             winning: true
