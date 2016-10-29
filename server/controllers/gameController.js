@@ -6,8 +6,8 @@ var giphy = axios.create({ baseURL: 'http://api.giphy.com/v1/gifs' });
 const games = module.exports
 
 games.fetchGiphy = function (keyword) {
-  return giphy.get(`/search?q=${keyword}&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
-    .then(res => res.data)
+  return giphy.get(`/random?tag=${keyword}&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
+    .then(res => res.data.data)
 }
 
 games.create = function (topic, userId) {
@@ -128,7 +128,7 @@ games.createChannel = function (id) {
     socket.on('keyword', function (data) {
       console.log('User: ', socket.request.user)
       console.log('Leader: ', socket.game.leader)
-      if (!socket.request.user.facebookId !== socket.game.leader) {
+      if (socket.request.user.facebookId != socket.game.leader) {
         console.log('got keyword from non-leader', data)
         return gameSocket.emit('error', new games.BadRequest('player is not the game leader'))
       }
@@ -141,9 +141,9 @@ games.createChannel = function (id) {
       var keyword = cleanseString(data.keyword)
 
       games.fetchGiphy(keyword)
-        .then(src => {
+        .then(image => {
           console.log('fetched giphy')
-          return gameSocket.emit('roundStart', { image: src })
+          return gameSocket.emit('roundStart', { image: image.image_url })
         })
         // .catch(err => {
         //   console.log('failed getting giphy', err)

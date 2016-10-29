@@ -40,7 +40,7 @@ module.exports = class Game extends React.Component {
 
     this.state.socket.on('roundStart', data => {
       console.log('roundStart', data)
-      this.setState({gif: data})
+      this.setState({gif: data.image})
     })
 
     this.state.socket.on('roundEnd', data => {
