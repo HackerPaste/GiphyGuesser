@@ -1,8 +1,4 @@
 var React = require('react');
-var CreateStory = require('./CreateStory');
-var StartButton = require ('./startButton.js')
-
-
 
 module.exports = class Accordion extends React.Component {
   constructor(props) {
@@ -14,7 +10,7 @@ module.exports = class Accordion extends React.Component {
     }
 
     this.toggle = this.toggle.bind(this)
-    this.handleGameCreateSubmit = this.handleMessageSubmit.bind(this);
+    this.handleGameCreateSubmit = this.handleGameCreateSubmit.bind(this);
   }
 
   toggle() {
@@ -24,6 +20,7 @@ module.exports = class Accordion extends React.Component {
   handleGameCreateSubmit(event) {
     event.preventDefault()
     API.createGame(this.state.gameTopic)
+      .then(() => this.context.router.push(`/game_${props.game_id}`))
   }
 
   handleGameCreateInput(event) {

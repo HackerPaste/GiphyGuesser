@@ -1,7 +1,7 @@
 var React = require('react')
 
 var Accordion = require('./accordion')
-var GamesList = require ('./games.js')
+var GamesList = require ('./gamesList.js')
 var API = require('../lib/api')
 
 module.exports = class Lobby extends React.Component {
