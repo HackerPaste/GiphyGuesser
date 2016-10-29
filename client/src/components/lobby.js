@@ -32,7 +32,7 @@ module.exports = class Lobby extends React.Component {
     // console.log("lobby.js this.state.games: ", this.state.games)
     return (
       <div>
-        <GamesList gamesGoing={this.state.games} />
+        <GamesList gamesGoing={this.state.games.reverse()} />
         <Accordion />
       </div>
 
