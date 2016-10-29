@@ -104,6 +104,8 @@ games.createChannel = function (id) {
       games.fetchGiphy(keyword)
         .then(image => {
           console.log('fetched giphy')
+          socket.game.image = image.image_url
+          socket.game.save()
           return gameSocket.emit('roundStart', { image: image.image_url })
         })
         // .catch(err => {
