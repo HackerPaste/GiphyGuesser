@@ -40,6 +40,7 @@ module.exports = class Game extends React.Component {
 
     API.joinGame(this.props.params.gameId)
       .then((game) => this.setState({game: game}))
+      .then((game) => this.setState({game: game, gif: game.image}))
 
     this.state.socket.on('newRound', data => {
       console.log('newRound', data)
