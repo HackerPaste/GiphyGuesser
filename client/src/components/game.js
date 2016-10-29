@@ -106,7 +106,7 @@ module.exports = class Game extends React.Component {
         <GameConsole gif={this.state.gif} gameOver={this.state.gameOver} gameOverFlag={this.state.gameOverFlag} handleKeywordSubmit={this.handleKeywordSubmit} handleKeywordInput={this.handleKeywordInput}/>
           {
             this.state.gameOverFlag ?
-            <p>{this.state.gameOver.data}</p>
+            <p>GameOVER!</p>
             :
             <p>Keep guessing!</p>
           }

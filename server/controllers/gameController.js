@@ -133,6 +133,12 @@ games.createChannel = function (id) {
         if (cleanseString(message.text) === keyword ) { //I took this part out for the demonstration: && game.leader !== message.author
           // send a winning message
           console.log("WINNER WINNER CHICKEN DINNER")
+          gameSocket.emit('message', {
+            author: message.author,
+            text: message.text,
+            winning: true
+          })
+
           return gameSocket.emit('roundEnd', {
             author: message.author,
             text: message.text,
