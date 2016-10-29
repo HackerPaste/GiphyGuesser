@@ -61,7 +61,7 @@ module.exports = class Game extends React.Component {
 
     this.state.socket.on('playerJoined', data => {
       console.log('playerJoined', data)
-      this.setState({playerJoined: data})
+      // this.setState({playerJoined: data})
     })
 
     this.state.socket.on('playerLeft', data => {

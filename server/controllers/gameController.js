@@ -52,18 +52,22 @@ games.joinGame = function (gameId, user) {
       } else {
         socket = io.of(`/game_${gameId}`);
       }
+      console.log("gameController game: ", game, "user: ", user)
       if (!game.users.map(user => user.facebookId).includes(user.facebookId)) {
-        if (game.users.length < game.maxPlayers) {
+        console.log("222gameController game: ", game, "user: ", user)
           game.users.push(user)
-          return Game.update({_id: gameId}, { $push: { users: user._id } })
+          return Game.update({_id: gameId}, { $push: { users: user } })
             .then(() => {
+              console.log("333gameController game: ", game, "user: ", user)
               socket.emit('playerJoined', user)
               return game
             })
-        }
 
         throw new games.BadRequest(`game ${gameId} is full`)
       }
+    })
+    .catch(function(err) {
+      console.log("ERRERERERERREREROR: ", err)
     })
 }
 
