@@ -29,6 +29,12 @@ module.exports = class Lobby extends React.Component {
       games.push(game)
       this.setState({ games: games })
     })
+
+    this.state.socket.on('imageChanged', data => {
+      var games = this.state.games
+      var game = games.find(game => game._id === data.gameId)
+      game.image = data.image
+    })
   }
 
   render () {
