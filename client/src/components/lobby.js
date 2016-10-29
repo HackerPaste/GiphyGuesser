@@ -26,6 +26,7 @@ module.exports = class Lobby extends React.Component {
   }
 
   render () {
+    console.log("lobby.js this.state.games: ", this.state.games)
     return (
       <div>
         <GamesList gamesGoing={this.state.games} />
