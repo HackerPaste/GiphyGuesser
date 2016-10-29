@@ -101,7 +101,7 @@ module.exports = class Game extends React.Component {
     return(
       <div>
         <GameConsole gif={this.state.gif} gameOver={this.state.gameOver} gameOverFlag={this.state.gameOverFlag} handleKeywordSubmit={this.handleKeywordSubmit} handleKeywordInput={this.handleKeywordInput}/>
-        <Chat users={this.state.users} messageRec={this.state.messageRec} handleMessageSubmit={this.handleMessageSubmit} handleMessageInput={this.handleMessageInput}/>
+        <Chat user={this.state.currentUser} messageRec={this.state.messageRec} handleMessageSubmit={this.handleMessageSubmit} handleMessageInput={this.handleMessageInput}/>
       </div>
     )
 

@@ -6,8 +6,9 @@ module.exports = (props) => (
       <div className="guessFeed">
         {
           props.messageRec.map(message => {
-            var user = props.users[message.author]
-            return <ChatMessage image={user.profilePic} text={message.text} />
+            // var user = props.users[message.author]
+            console.log("user: ", props.user)
+            return <ChatMessage image={props.user.profilePic} text={message.text} />
           })
         }
         <div id="chatControls">
