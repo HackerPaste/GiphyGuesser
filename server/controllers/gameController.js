@@ -44,7 +44,7 @@ games.find = function (id) {
 }
 
 games.joinGame = function (gameId, user) {
-  return games.find(gameId).populate('users')
+  return Game.findOne({ _id: gameId }).populate('users')
     .then(game => {
       var socket
       if (!Object.keys(io.nsps).includes(`/game_${gameId}`)) {
