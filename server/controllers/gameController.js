@@ -52,18 +52,22 @@ games.joinGame = function (gameId, user) {
       } else {
         socket = io.of(`/game_${gameId}`);
       }
+      console.log("gameController game: ", game, "user: ", user)
       if (!game.users.map(user => user.facebookId).includes(user.facebookId)) {
-        if (game.users.length < game.maxPlayers) {
+        console.log("222gameController game: ", game, "user: ", user)
           game.users.push(user)
-          return Game.update({_id: gameId}, { $push: { users: user._id } })
+          return Game.update({_id: gameId}, { $push: { users: user } })
             .then(() => {
+              console.log("333gameController game: ", game, "user: ", user)
               socket.emit('playerJoined', user)
               return game
             })
-        }
 
         throw new games.BadRequest(`game ${gameId} is full`)
       }
+    })
+    .catch(function(err) {
+      console.log("ERRERERERERREREROR: ", err)
     })
 }
 
@@ -87,6 +91,7 @@ games.createChannel = function (id) {
 
     socket.on('message', function (message) {
       // do nothing for invalid messages
+      console.log("message received: ", message)
       if (!message.text || message.text.length < 3 || !message.author ) {
         return
       }
@@ -95,6 +100,9 @@ games.createChannel = function (id) {
       message.text = message.text.slice(0, 140)
       var game = socket.game
 
+      console.log("game.users.map(user => user.facebookId).includes(message.author): ", game.users.map(user => user.facebookId).includes(message.author))
+      console.log("game.users: ", game.users, "message.author: ", message.author)
+      console.log("game: ", game)
       if (game.users.map(user => user.facebookId).includes(message.author)) {
         // message matches the phrase and the author isn't the leader
         if (cleanseString(message.text) === game.keyword && game.leader !== message.author) {
