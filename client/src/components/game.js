@@ -19,7 +19,8 @@ module.exports = class Game extends React.Component {
       messageRec: [],
       users: {},
       keyword: '',
-      gameOverFlag: false
+      gameOverFlag: false,
+      currentUser: ''
     }
 
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
@@ -30,7 +31,14 @@ module.exports = class Game extends React.Component {
   }
 
   componentDidMount () {
-    API.getGame(this.props.params.gameId)
+    API.getUser()
+    .then(user => {
+      this.setState({
+        currentUser: user
+      })
+    })
+
+    API.joinGame(this.props.params.gameId)
       .then((game) => this.setState({game: game}))
 
     this.state.socket.on('newRound', data => {
@@ -71,8 +79,7 @@ module.exports = class Game extends React.Component {
 
   handleMessageSubmit(event) {
     event.preventDefault()
-    console.log("this.state.socket: ", this.state.socket, "author: ", props.user.facebookId, "text: ", this.state.messageSend)
-    this.state.socket.emit('message', {author: props.user.facebookId, text: this.state.messageSend})
+    this.state.socket.emit('message', {author: this.props.routes[0].user.facebookId, text: this.state.messageSend})
   }
 
   handleMessageInput(event) {
@@ -89,12 +96,12 @@ module.exports = class Game extends React.Component {
   }
 
   render() {
-    console.log("this.state.messageRec: ", this.state.messageRec)
-    console.log(this.state.socket)
+    // console.log("this.state.messageRec: ", this.state.messageRec)
+    // console.log("this.state.socket: ", this.state.socket)
     return(
       <div>
         <GameConsole gif={this.state.gif} gameOver={this.state.gameOver} gameOverFlag={this.state.gameOverFlag} handleKeywordSubmit={this.handleKeywordSubmit} handleKeywordInput={this.handleKeywordInput}/>
-        <Chat users={this.state.users} messageRec={this.state.messageRec} handleMessageSubmit={this.handleKeywordSubmit} handleMessageInput={this.handleKeywordInput}/>
+        <Chat users={this.state.users} messageRec={this.state.messageRec} handleMessageSubmit={this.handleMessageSubmit} handleMessageInput={this.handleMessageInput}/>
       </div>
     )
 

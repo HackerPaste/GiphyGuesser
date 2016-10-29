@@ -20,3 +20,8 @@ API.createGame = function (topic) {
   return http.post('/api/games', {topic: topic})
     .then(res => res.data)
 }
+
+API.joinGame = function (gameId) {
+  return http.put(`/api/games/${gameId}`)
+    .then(res => res.data)
+}
