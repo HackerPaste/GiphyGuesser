@@ -6,7 +6,7 @@ var giphy = axios.create({ baseURL: 'http://api.giphy.com/v1/gifs' });
 const games = module.exports
 
 games.fetchGiphy = function (keyword) {
-  return giphy.get(`/random?tag=${keyword}&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
+  return giphy.get(`/random?tag=${keyword}&lang=en&api_key=${process.env.GIPHY_KEY || 'dc6zaTOxFJmzC'}`)
     .then(res => res.data.data)
 }
 
