@@ -2,9 +2,6 @@ var React = require('react')
 var { Router, Route, Link, IndexRoute, hashHistory, browserHistory } = require('react-router')
 var Lobby = require('./lobby')
 var Game = require('./game')
-var Story = require('./story')
-var Login = require('./login')
-var CreateStory = require('./CreateStory')
 var NavBar = require('./NavBar')
 var API = require('../lib/api')
 
@@ -26,9 +23,6 @@ module.exports = class App extends React.Component {
       this.setState({
         currentUser: user
       })
-    })
-    .catch(err => {
-      console.log('App.js - No user is signed in: ', err)
     })
   }
 
@@ -52,7 +46,7 @@ module.exports = class App extends React.Component {
           //if there is a current user, render the lobby/story with react router
           //else tell the user to login
           this.state.currentUser ?
-            <Router history={hashHistory}>
+            <Router history={browserHistory}>
               <Route path='/' component={Lobby} user={this.state.currentUser}/>
               <Route path='/game/:gameId' user={this.state.currentUser} component={Game} />
             </Router>

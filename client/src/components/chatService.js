@@ -1,7 +1,7 @@
 var React = require('react')
 
 module.exports = (props) => (
-  <div class="container">
+  <div className="container">
     <div className="guessWrap">
       <div className="guessFeed">
         {

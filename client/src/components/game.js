@@ -29,10 +29,9 @@ module.exports = class Game extends React.Component {
   }
 
   componentDidMount () {
-    API.getGame(this.props.game_id)
-      .then(function(game) {
-        this.setState({game: game})
-      })
+    console.log("game.js this.props.game_id: ", this.props)
+    API.getGame(this.props.params.gameId)
+      .then((game) => this.setState({game: game}))
 
     this.state.socket.on('newRound', function(data) {
       this.setState({gameOverFlag: false})

@@ -1,4 +1,5 @@
 var React = require('react');
+var API = require('../lib/api')
 
 module.exports = class Accordion extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ module.exports = class Accordion extends React.Component {
 
     this.toggle = this.toggle.bind(this)
     this.handleGameCreateSubmit = this.handleGameCreateSubmit.bind(this);
+    this.handleGameCreateInput = this.handleGameCreateInput.bind(this);
   }
 
   toggle() {

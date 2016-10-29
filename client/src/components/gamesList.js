@@ -9,7 +9,7 @@ module.exports = (props) => (
       <div className="gameInProgress">
       	<ul>
       		{
-            this.props.gamesGoing.map(game => {
+              props.gamesGoing.map(game => {
               return <GameOn game={game} />
             })
           }
