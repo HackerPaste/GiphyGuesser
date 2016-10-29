@@ -52,22 +52,20 @@ games.joinGame = function (gameId, user) {
       } else {
         socket = io.of(`/game_${gameId}`);
       }
-      console.log("gameController game: ", game, "user: ", user)
       if (!game.users.map(user => user.facebookId).includes(user.facebookId)) {
-        console.log("222gameController game: ", game, "user: ", user)
-          game.users.push(user)
-          return Game.update({_id: gameId}, { $push: { users: user } })
-            .then(() => {
-              console.log("333gameController game: ", game, "user: ", user)
-              socket.emit('playerJoined', user)
-              return game
-            })
+        game.users.push(user)
+        return Game.update({_id: gameId}, { $push: { users: user._id } })
+          .then(() => {
+            socket.emit('playerJoined', user)
+            return game
+          })
+        }
 
         throw new games.BadRequest(`game ${gameId} is full`)
       }
     })
     .catch(function(err) {
-      console.log("ERRERERERERREREROR: ", err)
+      console.log(err)
     })
 }
 
@@ -88,7 +86,6 @@ games.createChannel = function (id) {
   })
   gameSocket.on('connection', function (socket) {
     console.log(`new connection on channel '/game_${id}'`)
-
     socket.on('message', function (message) {
       // do nothing for invalid messages
       console.log("message received: ", message)
@@ -100,9 +97,6 @@ games.createChannel = function (id) {
       message.text = message.text.slice(0, 140)
       var game = socket.game
 
-      console.log("game.users.map(user => user.facebookId).includes(message.author): ", game.users.map(user => user.facebookId).includes(message.author))
-      console.log("game.users: ", game.users, "message.author: ", message.author)
-      console.log("game: ", game)
       if (game.users.map(user => user.facebookId).includes(message.author)) {
         // message matches the phrase and the author isn't the leader
         if (cleanseString(message.text) === game.keyword && game.leader !== message.author) {
@@ -134,8 +128,6 @@ games.createChannel = function (id) {
     })
 
     socket.on('keyword', function (data) {
-      console.log('User: ', socket.request.user)
-      console.log('Leader: ', socket.game.leader)
       if (socket.request.user.facebookId != socket.game.leader) {
         console.log('got keyword from non-leader', data)
         return gameSocket.emit('error', new games.BadRequest('player is not the game leader'))
