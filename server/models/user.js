@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 //set up for a new user
 const userSchema = new Schema({
   name: { type: String, required: true },
-  facebookId: { type: String, required: true, unique: true },
+  facebookId: { type: Number, required: true, unique: true },
   profilePic: String,
   token: String
 })
