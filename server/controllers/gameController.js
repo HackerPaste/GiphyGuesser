@@ -59,8 +59,6 @@ games.joinGame = function (gameId, user) {
             socket.emit('playerJoined', user)
             return game
           })
-        }
-
         throw new games.BadRequest(`game ${gameId} is full`)
       }
     })
@@ -139,7 +137,8 @@ games.createChannel = function (id) {
       }
 
       var keyword = cleanseString(data.keyword)
-
+      socket.game.keyword = keyword
+      socket.game.save()
       games.fetchGiphy(keyword)
         .then(image => {
           console.log('fetched giphy')

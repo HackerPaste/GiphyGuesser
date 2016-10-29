@@ -7,10 +7,8 @@ var API = require('../lib/api')
 module.exports = class Lobby extends React.Component {
   constructor (props) {
     super(props)
-
     this.state = {
       games : [],
-      displayComplete: false,
       socket: io()
     }
   }
@@ -23,17 +21,10 @@ module.exports = class Lobby extends React.Component {
       .catch(err => {
         console.log("ERROR getGames API call failed: ", err)
       })
-
     this.state.socket.on('gameCreated', game => {
       var games = this.state.games.slice()
       games.push(game)
       this.setState({ games: games })
-    })
-
-    this.state.socket.on('imageChanged', data => {
-      var games = this.state.games
-      var game = games.find(game => game._id === data.gameId)
-      game.image = data.image
     })
   }
 
