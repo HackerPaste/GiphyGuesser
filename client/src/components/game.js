@@ -10,7 +10,7 @@ module.exports = class Game extends React.Component {
     super(props)
 
     this.state = {
-      socket: io.connect(`/game_${props.game_id}`), //Should happen in games.js
+      socket: io.connect(`/game_${this.props.params.gameId}`), //Should happen in games.js
       game: '',
       gameLeader: {},
       gif: '',
@@ -29,35 +29,39 @@ module.exports = class Game extends React.Component {
   }
 
   componentDidMount () {
-    console.log("game.js this.props.game_id: ", this.props)
     API.getGame(this.props.params.gameId)
       .then((game) => this.setState({game: game}))
 
-    this.state.socket.on('newRound', function(data) {
+    this.state.socket.on('newRound', data => {
+      console.log('newRound', data)
       this.setState({gameOverFlag: false})
       this.setState({gameLeader: data})
     })
 
-    this.state.socket.on('roundStart', function(data) {
+    this.state.socket.on('roundStart', data => {
+      console.log('roundStart', data)
       this.setState({gif: data})
     })
 
-    this.state.socket.on('roundEnd', function(data) {
-
+    this.state.socket.on('roundEnd', data => {
+      console.log('roundEnd', data)
 //Everyone gets the event, not everyone is winner - need logic for losers
       this.setState({gameOverFlag: true})
       this.setState({gameOver: data})
     })
 
-    this.state.socket.on('playerJoined', function(data) {
+    this.state.socket.on('playerJoined', data => {
+      console.log('playerJoined', data)
       this.setState({playerJoined: data})
     })
 
-    this.state.socket.on('playerLeft', function(data) {
+    this.state.socket.on('playerLeft', data => {
+      console.log('playerLeft', data)
       this.setState({playerLeft: data})
     })
 
-    this.state.socket.on('message', function(data) {
+    this.state.socket.on('message', data => {
+      console.log('message', data)
       var message = this.state.messageRec.slice()
       message.push(data)
       this.setState({messageRec: message})
