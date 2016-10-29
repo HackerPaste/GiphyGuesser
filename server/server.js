@@ -14,7 +14,6 @@ const morgan = require('morgan')
 const browserify = require('browserify-middleware')
 const LESS = require('node-less-endpoint')
 
-const router = require('./routes/routes')
 const User = require('./models/user')
 const db = require ('./models/config')
 const charles = require('./secretsecrets')
@@ -120,6 +119,8 @@ app.get('/auth/facebook/return', passport.authenticate('facebook', {
   successRedirect: '/#/',
 }))
 
+
+const router = require('./routes/routes')
 app.use('/api', router)
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/public/index.html'))
