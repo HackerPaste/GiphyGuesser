@@ -1,4 +1,4 @@
-var React = require('react')
+  var React = require('react')
 var io = require('socket.io-client')
 var Chat = require('./chatService')
 var GameConsole = require('./gameConsole')
@@ -30,7 +30,7 @@ module.exports = class Game extends React.Component {
 
   componentDidMount () {
     API.getGame(this.props.params.gameId)
-      .then((game) => this.setState({game: game}))
+      .then((game) => this.setState({game: game, gif: game.image}))
 
     this.state.socket.on('newRound', data => {
       console.log('newRound', data)
