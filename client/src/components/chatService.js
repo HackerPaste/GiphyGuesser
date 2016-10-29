@@ -12,7 +12,7 @@ module.exports = (props) => (
         }
         <div id="chatControls">
           <input id="messageInput" type="text" onChange={props.handleMessageInput}/>
-          <button id="submit" type="submit" onClick={props.handleSubmit}>Enter</button>
+          <button id="submit" type="submit" onClick={props.handleMessageSubmit}>Enter</button>
         </div>
       </div>
     </div>
